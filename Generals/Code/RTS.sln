@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32413.119
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{059D6162-CD51-11D0-AE1F-00A0C90FFFC3}") = "Benchmark", "LIBRARIES\SOURCE\Benchmark\Benchmark.dsp", "{3BF7D5E0-C82C-4531-B6CB-257173EFDBAB}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Compress", "Tools\Compress\Compress.vcxproj", "{637B3E77-4948-4E61-A37B-13B883A07D69}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Compression", "Libraries\Source\Compression\Compression.vcxproj", "{0CB2D4D5-445C-402F-854F-9FE881E634D0}"
@@ -20,16 +18,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameEngine", "GameEngine\GameEngine.vcxproj", "{E8D5B54F-076B-4CA0-B2B4-96ABF9F43E62}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameEngineDevice", "GameEngineDevice\GameEngineDevice.vcxproj", "{8270D47D-6F6B-406E-AA1E-1F11A00C96D7}"
-EndProject
-Project("{059D6162-CD51-11D0-AE1F-00A0C90FFFC3}") = "GameSpyHTTP", "Libraries\Source\GameSpy\GameSpy\ghttp\GameSpyHTTP.dsp", "{C6676E0B-594E-43F1-93B2-23B5C242B708}"
-EndProject
-Project("{059D6162-CD51-11D0-AE1F-00A0C90FFFC3}") = "GameSpyPatching", "Libraries\Source\GameSpy\GameSpy\pt\GameSpyPatching.dsp", "{D55758E9-1C34-4628-AC98-7F93E5F75CD7}"
-EndProject
-Project("{059D6162-CD51-11D0-AE1F-00A0C90FFFC3}") = "GameSpyPeer", "Libraries\Source\GameSpy\GameSpy\peer\GameSpyPeer.dsp", "{6FAA25FE-D698-40BB-8F67-0CA51B5FC33B}"
-EndProject
-Project("{059D6162-CD51-11D0-AE1F-00A0C90FFFC3}") = "GameSpyPresence", "Libraries\Source\GameSpy\GameSpy\gp\GameSpyPresence.dsp", "{812D816F-5BC8-4869-B5D4-55ABEE7667B7}"
-EndProject
-Project("{059D6162-CD51-11D0-AE1F-00A0C90FFFC3}") = "GameSpyStats", "Libraries\Source\GameSpy\GameSpy\gstats\GameSpyStats.dsp", "{0628E5CB-3CB5-4718-9700-6B197BE59070}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImagePacker", "Tools\ImagePacker\ImagePacker.vcxproj", "{91D83E74-45EF-4DDC-8F1E-FDD12269C470}"
 EndProject
