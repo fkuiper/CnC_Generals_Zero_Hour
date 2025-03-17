@@ -40,7 +40,8 @@
 
 static void writeVersion(char *file, int major, int minor, int build)
 {
-	FILE *filePtr = fopen(file, "w");
+	FILE* filePtr;
+	fopen_s(&filePtr, file, "w");
 	// Clobber the file.  Hey, this is a simple program.
 	if (file)
 	{
@@ -88,7 +89,7 @@ static char* strtrim(char* buffer)
 
 		if (source != buffer)
 		{
-			strcpy(buffer, source);
+			strcpy_s(buffer, sizeof(buffer), source);
 		}
 
 		//	Clip trailing white space from the string.
@@ -119,12 +120,12 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	int argc = 1;
 	char * argv[20];
 	argv[0] = NULL;
-
-	char * token = strtok(lpCmdLine, " ");
+	char* cntx = NULL;
+	char * token = strtok_s(lpCmdLine, " ", &cntx);
 	while (argc < 20 && token != NULL)
 	{
 		argv[argc++] = strtrim(token);
-		token = strtok(NULL, " ");
+		token = strtok_s(NULL, " ", &cntx);
 	}
 
 	int major = 1;
@@ -141,10 +142,11 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 		FILE *filePtr;
 
 		if (target) {
-			filePtr = fopen(target, "r+");
+			fopen_s(&filePtr, target, "r+");
 			if (filePtr)
 			{
 				char buffer[256];
+				buffer[0] = '\0';
 				char *stringPtr = NULL;
 
 				while (!feof(filePtr))
@@ -155,17 +157,17 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 						char *ptr;
 
 						// Looking for '#define VERSION "x.y.z"'
-						ptr = strtok(stringPtr, " ");	// The VERSION
-						ptr = strtok(NULL, "\n");			// The remainder
+						ptr = strtok_s(stringPtr, " ", &cntx);	// The VERSION
+						ptr = strtok_s(NULL, "\n", &cntx);			// The remainder
 						
 						if (*ptr == '\"')
 						{
 							ptr++; // Inc past the first "
-							ptr = strtok(ptr, ".");	// The first number
+							ptr = strtok_s(ptr, ".", &cntx);	// The first number
 							major = atoi(ptr);
-							ptr = strtok(NULL, ".");  // The second number
+							ptr = strtok_s(NULL, ".", &cntx);  // The second number
 							minor = atoi(ptr);
-							ptr = strtok(NULL, "\""); // The final number
+							ptr = strtok_s(NULL, "\"", &cntx); // The final number
 							build = atoi(ptr);
 							fclose(filePtr);
 
