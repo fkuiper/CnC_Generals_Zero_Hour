@@ -71,7 +71,7 @@ void __cdecl DebugPrint(const char* string, ...)
 		// Format string
 		va_list	va;
 		va_start(va, string);
-		vsprintf(&_buffer[0], string, va);
+		vsprintf_s(&_buffer[0], 1024, string, va);
 		va_end(va);
 
 		// Open log file
@@ -84,8 +84,8 @@ void __cdecl DebugPrint(const char* string, ...)
 			char dir[_MAX_DIR];
 
 			GetModuleFileName(GetModuleHandle(NULL), &path[0], sizeof(path));
-			_splitpath(path, drive, dir, NULL, NULL);
-			_makepath(_filename, drive, dir, debugLogName, "txt");
+			_splitpath_s(path, drive, NULL, dir, NULL, NULL, NULL, NULL, NULL);
+			_makepath_s(_filename, drive, dir, debugLogName, "txt");
 
 			OutputDebugString("Creating ");
 			OutputDebugString(_filename);
@@ -167,7 +167,7 @@ void __cdecl PrintWin32Error(const char* string, ...)
 		// Format string
 		va_list	va;
 		va_start(va, string);
-		vsprintf(&_buffer[0], string, va);
+		vsprintf_s(&_buffer[0], 1024, string, va);
 		va_end(va);
 
 		LPVOID lpMsgBuf;

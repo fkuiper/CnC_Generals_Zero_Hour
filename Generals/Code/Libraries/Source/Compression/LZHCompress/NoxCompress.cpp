@@ -54,7 +54,7 @@ Bool DecompressFile		(char *infile, char *outfile)
 	if (( infile == NULL ) || ( outfile == NULL ))
 		return FALSE;
 
-	inFilePtr = fopen( infile, "rb" );
+	fopen_s(&inFilePtr, infile, "rb" );
 	if ( inFilePtr )
 	{
 		// Allocate the appropriate amount of memory
@@ -103,7 +103,7 @@ Bool DecompressFile		(char *infile, char *outfile)
 		DEBUG_LOG(("Decompressed %s to %s, output size = %d\n", infile, outfile, rawSize));
 
 		LZHLDestroyDecompressor(decompress);
-		outFilePtr = fopen(outfile, "wb");
+		fopen_s(&outFilePtr, outfile, "wb");
 		if (outFilePtr)
 		{
 			fwrite (outBlock, rawSize, 1, outFilePtr);
@@ -140,7 +140,7 @@ Bool CompressFile			(char *infile, char *outfile)
 		return FALSE;
 
 	// Allocate the appropriate amount of memory
-	inFilePtr = fopen( infile, "rb" );
+	fopen_s(&inFilePtr, infile, "rb" );
 	if ( inFilePtr )
 	{
 		// Get size of file.
@@ -171,7 +171,7 @@ Bool CompressFile			(char *infile, char *outfile)
 
 		LZHLDestroyCompressor(compressor);
 
-		outFilePtr = fopen(outfile, "wb");
+		fopen_s(&outFilePtr, outfile, "wb");
 		if (outFilePtr)
 		{
 			// write out the uncompressed size first.

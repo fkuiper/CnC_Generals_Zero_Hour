@@ -65,8 +65,8 @@ static void doIt(void)
 
 	// Retrieve Hard drive S/N
 	char drive[8];
-	_splitpath((const char*)installPath, drive, NULL, NULL, NULL);
-	strcat(drive, "\\");
+	_splitpath_s((const char*)installPath, drive, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+	strcat_s(drive, 8, "\\");
 
 	DWORD volumeSerialNumber = 0;
 	DWORD maxComponentLength;
@@ -83,8 +83,8 @@ static void doIt(void)
 
 	// Add hard drive serial number portion
 	char volumeSN[16];
-	sprintf(volumeSN, "%lx-", volumeSerialNumber);
-	strcat(passKey, volumeSN);
+	sprintf_s(volumeSN, 16, "%lx-", volumeSerialNumber);
+	strcat_s(passKey, 128, volumeSN);
 
 	// Retrieve game serial #
 	unsigned char gameSerialNumber[64];
@@ -112,7 +112,7 @@ static void doIt(void)
 	RegCloseKey(hKey);
 
 	// Add game serial number portion
-	strcat(passKey, (char*)gameSerialNumber);
+	strcat_s(passKey, 128, (char*)gameSerialNumber);
 
 	// Obtain windows product ID
 	result = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "Software\\Microsoft\\Windows\\CurrentVersion", 0, KEY_READ, &hKey);
@@ -136,8 +136,8 @@ static void doIt(void)
 		RegCloseKey(hKey);
 
 		// Add windows product ID portion
-		strcat(passKey, "-");
-		strcat(passKey, (char*)winProductID);
+		strcat_s(passKey, 128, "-");
+		strcat_s(passKey, 128, (char*)winProductID);
 	}
 
 	DebugPrint("Retrieved PassKey: %s\n", passKey);
@@ -165,11 +165,12 @@ static void doIt(void)
 	if (lastBackslash)
 		*lastBackslash = 0; // strip of \\game.exe from install path
 
-	strcat((char *)installPath, "\\Generals.dat");
+	strcat_s((char *)installPath, MAX_PATH, "\\Generals.dat");
 
 	DebugPrint("DAT file = '%s'\n", installPath);
 
-	FILE *fp = fopen((char *)installPath, "wb");
+	FILE* fp;
+	fopen_s(&fp, (char*)installPath, "wb");
 	if (fp)
 	{
 		fwrite(cypherText, textLen, 1, fp);
@@ -178,6 +179,8 @@ static void doIt(void)
 
 	CDAPFN_ENDMARK(doIt);
 }
+
+
 
 int APIENTRY WinMain(HINSTANCE hInstance,
                      HINSTANCE hPrevInstance,
