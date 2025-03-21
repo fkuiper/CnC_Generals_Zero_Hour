@@ -371,7 +371,7 @@ void MonoClass::Printf(char const *text, ...)
 	if ( !Enabled || (Handle == INVALID_HANDLE_VALUE) ) return;
 
 	va_start(va, text);
-	vsprintf(buffer, text, va);
+	vsprintf_s(buffer, text, va);
 	buffer[sizeof(buffer)-1] = '\0';
 
 	Print(buffer);
@@ -413,7 +413,7 @@ void MonoClass::Printf(int text, ...)
 	if ( !Enabled || (Handle == INVALID_HANDLE_VALUE) ) return;
 
 	va_start(va, text);
-	vsprintf(buffer, Fetch_String(text), va);
+	vsprintf_s(buffer, Fetch_String(text), va);
 	buffer[sizeof(buffer)-1] = '\0';
 
 	Print(buffer);

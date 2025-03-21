@@ -104,13 +104,13 @@ public:
 	float		Project_To_Axis(const Vector3 & axis) const;
 	float		Volume(void) const { return 2.0*Extent.X * 2.0*Extent.Y * 2.0*Extent.Z; }
 	void		Compute_Point(float params[3],Vector3 * set_point) const;
-	void		Compute_Axis_Aligned_Extent(Vector3 * set_extent) const;
+	void		Compute_Axis_Aligned_Extent(_In_ Vector3 * set_extent) const;
 
 	Matrix3	Basis;
 	Vector3	Center;
 	Vector3	Extent;
 
-	static void	Transform(const Matrix3D & tm,const OBBoxClass & in,OBBoxClass * out);
+	static void	Transform(const Matrix3D& tm, const OBBoxClass& in, _In_ OBBoxClass* out);
 };
 
 // Test functions: slow, easy to understand version of box intersection code :)
@@ -158,7 +158,7 @@ inline void OBBoxClass::Transform
 (
 	const Matrix3D &		tm,
 	const OBBoxClass &	in,
-	OBBoxClass *			out
+	_In_ OBBoxClass *			out
 )
 {
 	WWASSERT(out);
@@ -211,7 +211,7 @@ inline void OBBoxClass::Compute_Point(float params[3],Vector3 * set_point) const
  * HISTORY:                                                                                    *
  *   11/15/99   gth : Created.                                                                 *
  *=============================================================================================*/
-inline void OBBoxClass::Compute_Axis_Aligned_Extent(Vector3 * set_extent) const
+inline void OBBoxClass::Compute_Axis_Aligned_Extent(_In_ Vector3 * set_extent) const
 {
 	WWASSERT(set_extent != NULL);
 

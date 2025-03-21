@@ -187,7 +187,7 @@ char *RegistryClass::Get_String( const char * name, char *value, int value_size,
 		   *value = 0;
       } else {
          assert(strlen(default_string) < (unsigned int) value_size);
-         strcpy(value, default_string);
+         strcpy_s(value, strlen(value), default_string);
       }
 	}
 	return value;

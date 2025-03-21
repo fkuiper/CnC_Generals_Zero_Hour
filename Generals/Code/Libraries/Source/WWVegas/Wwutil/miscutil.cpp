@@ -39,6 +39,9 @@
 //
 
 //---------------------------------------------------------------------------
+#pragma warning(push)
+#pragma warning(disable: 4172) // TODO: rewrite! Disable: returning address of local variable or temporary: time_str	
+
 LPCSTR cMiscUtil::Get_Text_Time(void)
 {
    //
@@ -47,11 +50,14 @@ LPCSTR cMiscUtil::Get_Text_Time(void)
    // Note: BoundsChecker reports 2 memory leaks in ctime here.
 	//
 
-	long time_now = ::time(NULL);
-   char * time_str = ::ctime(&time_now);
-   time_str[::strlen(time_str) - 1] = 0; // remove \n
-   return time_str; 
+	time_t time_now = ::time(NULL);
+	char time_str[128];
+	::ctime_s(time_str, 128, &time_now);
+	time_str[::strlen(time_str) - 1] = 0; // remove \n
+	return time_str; 
+
 }
+#pragma warning(pop)
 
 //---------------------------------------------------------------------------
 void cMiscUtil::Seconds_To_Hms(float seconds, int & h, int & m, int & s)
@@ -77,7 +83,7 @@ bool cMiscUtil::Is_String_Same(LPCSTR str1, LPCSTR str2)
    WWASSERT(str1 != NULL);
    WWASSERT(str2 != NULL);
 
-   return(::stricmp(str1, str2) == 0);
+   return(::_stricmp(str1, str2) == 0);
 }
 
 //-----------------------------------------------------------------------------
@@ -86,7 +92,7 @@ bool cMiscUtil::Is_String_Different(LPCSTR str1, LPCSTR str2)
    WWASSERT(str1 != NULL);
    WWASSERT(str2 != NULL);
 
-   return(::stricmp(str1, str2) != 0);
+   return(::_stricmp(str1, str2) != 0);
 }
 
 //-----------------------------------------------------------------------------
@@ -159,7 +165,7 @@ void cMiscUtil::Trim_Trailing_Whitespace(char * text)
 }
 
 //-----------------------------------------------------------------------------
-void cMiscUtil::Get_File_Id_String(LPCSTR filename, StringClass & str)
+void cMiscUtil::Get_File_Id_String(_In_ LPCSTR filename, StringClass & str)
 {
 	WWASSERT(filename != NULL);
 
@@ -192,9 +198,9 @@ void cMiscUtil::Get_File_Id_String(LPCSTR filename, StringClass & str)
 	Get_Image_File_Header(filename, &header);
 	int time_date_stamp = header.TimeDateStamp;
 
-	char working_filename[500];
-	strcpy(working_filename, filename);
-	::strupr(working_filename);
+	char working_filename[500]{ '\0' };
+	strcpy_s(working_filename, filename);
+	::_strupr_s(working_filename);
 
    //
    // Strip path off filename
@@ -216,7 +222,7 @@ void cMiscUtil::Get_File_Id_String(LPCSTR filename, StringClass & str)
 }
 
 //-----------------------------------------------------------------------------
-void cMiscUtil::Remove_File(LPCSTR filename)
+void cMiscUtil::Remove_File(_In_ LPCSTR filename)
 {
    WWASSERT(filename != NULL);
 

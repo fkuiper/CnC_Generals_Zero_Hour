@@ -303,7 +303,7 @@ const Vector2 DazzleINIClass::Get_Vector2(char const *section, char const *entry
 		INIEntry * entryptr = Find_Entry(section, entry);
 		if (entryptr && entryptr->Value != NULL) {
 			Vector2	ret;
-			if ( sscanf( entryptr->Value, "%f,%f", &ret[0], &ret[1], &ret[2] ) == 2 ) {
+			if ( sscanf_s( entryptr->Value, "%f,%f", &ret[0], &ret[1] ) == 2 ) {
 				return ret;
 			}
 		}
@@ -317,7 +317,7 @@ const Vector3 DazzleINIClass::Get_Vector3(char const *section, char const * entr
 		INIEntry * entryptr = Find_Entry(section, entry);
 		if (entryptr && entryptr->Value != NULL) {
 			Vector3	ret;
-			if ( sscanf( entryptr->Value, "%f,%f,%f", &ret[0], &ret[1], &ret[2] ) == 3 ) {
+			if ( sscanf_s( entryptr->Value, "%f,%f,%f", &ret[0], &ret[1], &ret[2] ) == 3 ) {
 				return ret;
 			}
 		}
@@ -331,7 +331,7 @@ const Vector4 DazzleINIClass::Get_Vector4(char const *section, char const *entry
 		INIEntry * entryptr = Find_Entry(section, entry);
 		if (entryptr && entryptr->Value != NULL) {
 			Vector4	ret;
-			if ( sscanf( entryptr->Value, "%f,%f,%f,%f", &ret[0], &ret[1], &ret[2], &ret[3] ) == 4 ) {
+			if ( sscanf_s( entryptr->Value, "%f,%f,%f,%f", &ret[0], &ret[1], &ret[2], &ret[3] ) == 4 ) {
 				return ret;
 			}
 		}
@@ -670,7 +670,7 @@ void DazzleRenderObjClass::Init_Type(const DazzleInitClass& i)
 		for (unsigned a=0;a<type_count;++a) {
 			new_types[a]=types[a];
 		}
-		for (;a<new_count;++a) {
+		for (uint a=0; a<new_count;++a) {
 			new_types[a]=0;
 		}
 		delete[] types;
@@ -693,7 +693,7 @@ void DazzleRenderObjClass::Init_Lensflare(const LensflareInitClass& i)
 		for (unsigned a=0;a<lensflare_count;++a) {
 			new_lensflares[a]=lensflares[a];
 		}
-		for (;a<new_count;++a) {
+		for (uint a=0;a<new_count;++a) {
 			new_lensflares[a]=0;
 		}
 		delete[] lensflares;

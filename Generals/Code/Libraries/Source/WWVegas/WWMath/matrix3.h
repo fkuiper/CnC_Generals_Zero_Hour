@@ -187,13 +187,13 @@ public:
 	** matrix addition
 	*/ 
 	WWINLINE friend Matrix3 operator + (const Matrix3& a, const Matrix3& b);
-	static WWINLINE void Add(const Matrix3 & a, const Matrix3 & b,Matrix3 * res);
+	static WWINLINE void Add(const Matrix3 & a, const Matrix3 & b, _In_ Matrix3 * res);
 
 	/*
 	** matrix subtraction
 	*/
 	WWINLINE friend Matrix3 operator - (const Matrix3 & a, const Matrix3 & b);
-	static WWINLINE void Subtract(const Matrix3 & a, const Matrix3 & b,Matrix3 * res);
+	static WWINLINE void Subtract(const Matrix3& a, const Matrix3& b, _In_ Matrix3* res);
 
 	/*
 	** matrix multiplication
@@ -694,7 +694,7 @@ WWINLINE Matrix3 operator + (const Matrix3 & a, const Matrix3 & b)
 	);
 }
 
-WWINLINE void Matrix3::Add(const Matrix3 & a, const Matrix3 & b,Matrix3 * c)
+WWINLINE void Matrix3::Add(const Matrix3 & a, const Matrix3 & b,_In_ Matrix3 * c)
 { 
 	WWASSERT(c);
 	Vector3::Add(a.Row[0],b.Row[0],&(c->Row[0]));
@@ -714,7 +714,7 @@ WWINLINE Matrix3 operator - (const Matrix3 & a, const Matrix3 & b)
 	);
 }
 
-WWINLINE void Matrix3::Subtract(const Matrix3 & a, const Matrix3 & b,Matrix3 * c)
+WWINLINE void Matrix3::Subtract(const Matrix3 & a, const Matrix3 & b,_In_ Matrix3 * c)
 {
 	WWASSERT(c);
 	Vector3::Subtract(a.Row[0],b.Row[0],&(c->Row[0]));

@@ -748,6 +748,8 @@ WWINLINE unsigned int DX8Wrapper::Convert_Color(const Vector4& color)
 //
 // ----------------------------------------------------------------------------
 
+#pragma warning(disable: 4731)
+
 WWINLINE unsigned int DX8Wrapper::Convert_Color(const Vector3& color,float alpha)
 {
 	const float scale = 255.0;
@@ -801,7 +803,7 @@ skip:
 		or		eax,ecx					// (a << 24) | b
 		or		eax,ebx					// (a << 24) | (r << 16) | b
 		or		eax,edx					// (a << 24) | (r << 16) | (g << 8) | b
-		
+
 		fstp	st(0)
 
 		// Restore fpu rounding mode

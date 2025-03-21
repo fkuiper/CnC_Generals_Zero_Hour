@@ -334,7 +334,7 @@ void MeshGeometryClass::Set_Name(const char * newname)
 	}
 	if (newname) {
 		MeshName = NEW_REF(ShareBufferClass<char>,(strlen(newname)+1, "MeshGeometryClass::MeshName"));
-		strcpy(MeshName->Get_Array(),newname);
+		strcpy_s(MeshName->Get_Array(), sizeof(MeshName->Get_Array()), newname);
 	}
 }
 
@@ -379,7 +379,7 @@ void MeshGeometryClass::Set_User_Text(char * usertext)
 	}
 	if (usertext) {
 		UserText = NEW_REF(ShareBufferClass<char>,(strlen(usertext)+1, "MeshGeometryClass::UserText"));
-		strcpy(UserText->Get_Array(),usertext);
+		strcpy_s(UserText->Get_Array(), sizeof(UserText->Get_Array()), usertext);
 	}
 }
 
@@ -1602,10 +1602,10 @@ WW3DErrorType MeshGeometryClass::Load_W3D(ChunkLoadClass & cload)
 	memset(tmpname,0,namelen);
 
 	if (strlen(header.ContainerName) > 0) {
-		strcpy(tmpname,header.ContainerName);
-		strcat(tmpname,".");
+		strcpy_s(tmpname, namelen, header.ContainerName);
+		strcat_s(tmpname, namelen, ".");
 	}
-	strcat(tmpname,header.MeshName);
+	strcat_s(tmpname, namelen, header.MeshName);
 
 	Set_Name(tmpname);
 

@@ -485,8 +485,8 @@ const char * RingRenderObjClass::Get_Name(void) const
 void RingRenderObjClass::Set_Name(const char * name)
 {
 	WWASSERT(name != NULL);
-	WWASSERT(strlen(name) < 2*W3D_NAME_LEN);
-	strcpy(Name,name);
+	WWASSERT(strlen(name) < 2 * W3D_NAME_LEN);
+	strcpy_s(Name, 2 * W3D_NAME_LEN, name);
 }
 
 /***********************************************************************************************
@@ -1077,7 +1077,7 @@ RingPrototypeClass::RingPrototypeClass (void)
 RingPrototypeClass::RingPrototypeClass(RingRenderObjClass *ring)
 {
 	::memset (&Definition, 0, sizeof (Definition));	
-	::strcpy (Definition.Name, ring->Get_Name ());
+	::strcpy_s(Definition.Name, 2 * W3D_NAME_LEN, ring->Get_Name());
 	
 	Definition.AnimDuration			= ring->AnimDuration;
 	Definition.Attributes			= ring->Get_Flags ();
@@ -1108,7 +1108,7 @@ RingPrototypeClass::RingPrototypeClass(RingRenderObjClass *ring)
 			filename = name;
 		}
 
-		::strcpy (Definition.TextureName, filename);
+		::strcpy_s(Definition.TextureName, 2 * W3D_NAME_LEN, filename);
 	}
 
 	//

@@ -139,7 +139,7 @@ StringClass::Resize (int new_len)
 		// string.
 		//
 		TCHAR *new_buffer = Allocate_Buffer (new_len);
-		_tcscpy (new_buffer, m_Buffer);
+		strcpy_s(new_buffer, sizeof(new_buffer), m_Buffer);
 
 		//
 		//	Switch to the new buffer
@@ -238,7 +238,7 @@ StringClass::Format_Args (const TCHAR *format, const va_list & arg_list )
 	#ifdef _UNICODE
 		retval = _vsnwprintf (temp_buffer, 512, format, arg_list);
 	#else
-		retval = _vsnprintf (temp_buffer, 512, format, arg_list);
+		retval = _vsnprintf_s (temp_buffer, 512, format, arg_list);
 	#endif
 	
 	//
@@ -273,7 +273,7 @@ StringClass::Format (const TCHAR *format, ...)
 	#ifdef _UNICODE
 		retval = _vsnwprintf (temp_buffer, 512, format, arg_list);
 	#else
-		retval = _vsnprintf (temp_buffer, 512, format, arg_list);
+		retval = _vsnprintf_s (temp_buffer, 512, format, arg_list);
 	#endif
 	
 	//

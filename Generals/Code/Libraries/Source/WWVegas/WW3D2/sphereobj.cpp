@@ -411,7 +411,7 @@ void SphereRenderObjClass::Set_Name(const char * name)
 {
 	WWASSERT(name != NULL);
 	WWASSERT(strlen(name) < 2*W3D_NAME_LEN);
-	strcpy(Name,name);
+	strcpy_s(Name, 2 * W3D_NAME_LEN, name);
 }
 
 
@@ -1029,7 +1029,7 @@ SpherePrototypeClass::SpherePrototypeClass (void)
 SpherePrototypeClass::SpherePrototypeClass(SphereRenderObjClass *sphere)
 {
 	::memset (&Definition, 0, sizeof (Definition));	
-	::strcpy (Definition.Name, sphere->Get_Name ());
+	::strcpy_s(Definition.Name, 2 * W3D_NAME_LEN, sphere->Get_Name());
 
 	Definition.DefaultAlpha = sphere->Get_Default_Alpha ();
 	Definition.AnimDuration = sphere->AnimDuration;
@@ -1057,7 +1057,7 @@ SpherePrototypeClass::SpherePrototypeClass(SphereRenderObjClass *sphere)
 			filename = name;
 		}
 
-		::strcpy (Definition.TextureName, filename);
+		::strcpy_s(Definition.TextureName, 2 * W3D_NAME_LEN, filename);
 
 	}
 
@@ -1454,7 +1454,8 @@ void SphereMeshClass::Generate(float radius, int slices, int stacks)
 	fans = W3DNEWARRAY int[fan_size * fan_ct];
 	
 	// Do Fan #1
-	for (int ct = 0; ct < fan_size; ct++) {
+	int ct = 0;
+	for (; ct < fan_size; ct++) {
 		fans[ct] = ct;
 	}
 	//fans[ct] = 1;

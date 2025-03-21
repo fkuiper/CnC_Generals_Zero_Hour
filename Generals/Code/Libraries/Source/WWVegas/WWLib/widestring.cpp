@@ -148,7 +148,7 @@ WideStringClass::Resize (int new_len)
 		// string.
 		//
 		WCHAR *new_buffer = Allocate_Buffer (new_len);
-		wcscpy (new_buffer, m_Buffer);
+		wcscpy_s(new_buffer, sizeof(new_buffer), m_Buffer);
 
 		//
 		//	Switch to the new buffer
@@ -253,7 +253,7 @@ WideStringClass::Format_Args (const WCHAR *format, const va_list & arg_list )
 	//
 	//	Format the string
 	//
-	int retval = _vsnwprintf (temp_buffer, 512, format, arg_list);
+	int retval = _vsnwprintf_s (temp_buffer, 512, format, arg_list);
 	
 	//
 	//	Copy the string into our buffer
@@ -283,7 +283,7 @@ WideStringClass::Format (const WCHAR *format, ...)
 	//
 	//	Format the string
 	//
-	int retval = _vsnwprintf (temp_buffer, 512, format, arg_list);
+	int retval = _vsnwprintf_s (temp_buffer, 512, format, arg_list);
 	
 	//
 	//	Copy the string into our buffer

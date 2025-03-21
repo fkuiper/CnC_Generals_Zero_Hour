@@ -147,7 +147,7 @@ void SimpleFileFactoryClass::Prepend_Sub_Directory( const char * sub_directory )
 
 	// Ensure sub_directory ends with a slash, and append a semicolon
 	char temp_sub_dir[1024];
-	strcpy(temp_sub_dir, sub_directory);
+	strcpy_s(temp_sub_dir, sub_directory);
 	if (temp_sub_dir[sub_len - 1] != '\\') {
 		temp_sub_dir[sub_len] = '\\';
 		temp_sub_dir[sub_len + 1] = 0;
@@ -182,7 +182,7 @@ void SimpleFileFactoryClass::Append_Sub_Directory( const char * sub_directory )
 
 	// Ensure sub_directory ends with a slash
 	char temp_sub_dir[1024];
-	strcpy(temp_sub_dir, sub_directory);
+	strcpy_s(temp_sub_dir, sub_directory);
 	if (temp_sub_dir[sub_len - 1] != '\\') {
 		temp_sub_dir[sub_len] = '\\';
 		temp_sub_dir[sub_len + 1] = 0;
@@ -282,7 +282,7 @@ FileClass * SimpleFileFactoryClass::Get_File( char const *filename )
 			{
 				char *tokstart=subdir.Peek_Buffer();
 				const char *tok;
-				while((tok=strtok(tokstart, ";")) != NULL) {
+				while((tok=strtok_s(tokstart, ";", NULL)) != NULL) {
 					tokstart=NULL;
 					new_name.Format("%s%s",tok,stripped_name.Peek_Buffer());
 					file->Set_Name( new_name );	// Call Set_Name to force an allocated name

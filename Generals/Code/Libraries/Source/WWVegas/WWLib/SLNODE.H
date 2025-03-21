@@ -79,7 +79,7 @@ class	GenericSLNode : public AutoPoolClass<GenericSLNode, 256>
 		//	that it cannot be used.
 		//
 	private:
-		GenericSLNode(void) {};
+		GenericSLNode(void) : GenericSLNode(NULL) {};
 
 		void		*NodeNext;			//	Next Node in the list chain
 		void		*NodeData;			//	Current Node in the list chain

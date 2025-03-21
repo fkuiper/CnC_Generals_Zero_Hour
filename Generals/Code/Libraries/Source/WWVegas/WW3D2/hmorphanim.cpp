@@ -251,7 +251,8 @@ int Build_List_From_String
 		//
 		// Determine how many entries there will be in the list
 		//
-		for (const char *entry = buffer;
+		const char* entry;
+		for (entry = buffer;
 			  (entry != NULL) && (entry[1] != 0);
 			  entry = ::strstr (entry, delimiter))
 		{
@@ -259,7 +260,7 @@ int Build_List_From_String
 			//
 			// Move past the current delimiter (if necessary)
 			//
-			if ((::strnicmp (entry, delimiter, delim_len) == 0) && (count > 0)) {
+			if ((::_strnicmp (entry, delimiter, delim_len) == 0) && (count > 0)) {
 				entry += delim_len;
 			}
 
@@ -286,7 +287,7 @@ int Build_List_From_String
 				//
 				// Move past the current delimiter (if necessary)
 				//
-				if ((::strnicmp (entry, delimiter, delim_len) == 0) && (count > 0)) {
+				if ((::_strnicmp (entry, delimiter, delim_len) == 0) && (count > 0)) {
 					entry += delim_len;
 				}
 
@@ -294,7 +295,7 @@ int Build_List_From_String
 				// Copy this entry into its own string
 				//
 				StringClass entry_string = entry;
-				char *delim_start = ::strstr (entry_string, delimiter);				
+				char *delim_start = (char*)::strstr (entry_string, delimiter);				
 				if (delim_start != NULL) {
 					delim_start[0] = 0;
 				}
@@ -345,7 +346,7 @@ bool HMorphAnimClass::Import(const char *hierarchy_name, TextFileClass &text_des
 	//
 	// Copy the hierarchy name into a class variable
 	//
-	::strncpy (HierarchyName, hierarchy_name, W3D_NAME_LEN);
+	::strncpy_s (HierarchyName, W3D_NAME_LEN, hierarchy_name, W3D_NAME_LEN);
 	HierarchyName[W3D_NAME_LEN - 1] = 0;
 	
 	//
@@ -482,13 +483,13 @@ void HMorphAnimClass::Set_Name(const char * name)
 	//
 	// Copy the full name
 	//
-	::strcpy (Name, name);
+	::strcpy_s(Name, 2* W3D_NAME_LEN, name);
 
 	//
 	// Try to find the separator (a period)
 	//
 	StringClass full_name	= name;
-	char *separator			= ::strchr (full_name, '.');
+	char *separator			= (char*)::strchr (full_name, '.');
 	if (separator != NULL) {
 		
 		//
@@ -496,8 +497,8 @@ void HMorphAnimClass::Set_Name(const char * name)
 		// into our two buffers
 		//
 		separator[0] = 0;
-		::strcpy (AnimName, separator + 1);
-		::strcpy (HierarchyName, full_name);
+		::strcpy_s (AnimName, W3D_NAME_LEN, separator + 1);
+		::strcpy_s (HierarchyName, W3D_NAME_LEN, full_name);
 	}
 
 	return ;
@@ -556,11 +557,12 @@ int HMorphAnimClass::Load_W3D(ChunkLoadClass & cload)
 	cload.Read(&header,sizeof(header));
 	cload.Close_Chunk();
 
-	strncpy(AnimName,header.Name,sizeof(AnimName));
-   strncpy(HierarchyName,header.HierarchyName,sizeof(HierarchyName));
-	strcpy(Name,HierarchyName);
-	strcat(Name,".");
-	strcat(Name,AnimName);
+	const uint nameLen = 2 * W3D_NAME_LEN;
+	strncpy_s(AnimName, W3D_NAME_LEN, header.Name, W3D_NAME_LEN);
+	strncpy_s(HierarchyName, W3D_NAME_LEN, header.HierarchyName, W3D_NAME_LEN);
+	strcpy_s(Name, nameLen, HierarchyName);
+	strcat_s(Name, nameLen, ".");
+	strcat_s(Name,nameLen, AnimName);
 
 	HTreeClass * base_pose = WW3DAssetManager::Get_Instance()->Get_HTree(HierarchyName);
 	if (base_pose == NULL) {
@@ -628,8 +630,8 @@ int HMorphAnimClass::Save_W3D(ChunkSaveClass & csave)
 	// init the header data
 	W3dMorphAnimHeaderStruct header;
 	memset(&header,0,sizeof(header));
-	strncpy(header.Name,AnimName,sizeof(header.Name));
-	strncpy(header.HierarchyName,HierarchyName,sizeof(header.HierarchyName));
+	strncpy_s(header.Name, W3D_NAME_LEN, AnimName, W3D_NAME_LEN);
+	strncpy_s(header.HierarchyName, W3D_NAME_LEN, HierarchyName, W3D_NAME_LEN);
 
 	header.FrameCount = FrameCount;
 	header.FrameRate = FrameRate;

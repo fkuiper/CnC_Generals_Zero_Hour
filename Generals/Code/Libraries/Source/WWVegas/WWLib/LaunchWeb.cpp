@@ -71,7 +71,7 @@ bool LaunchWebBrowser(const char* url)
 	GetTempFileName(tempPath, "WWS", 0, filename);
 
 	char* extPtr = strrchr(filename, '.');
-	strcpy(extPtr, ".html");
+	strcpy_s(extPtr, strlen(extPtr), ".html");
 
 	HANDLE file = CreateFile(filename, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS,
 			FILE_ATTRIBUTE_NORMAL, NULL);
@@ -104,7 +104,7 @@ bool LaunchWebBrowser(const char* url)
 
 	// Launch browser with specified URL
 	char commandLine[MAX_PATH];
-	sprintf(commandLine, "[open] %s", url);
+	sprintf_s(commandLine, "[open] %s", url);
 
   STARTUPINFO startupInfo;
 	memset(&startupInfo, 0, sizeof(startupInfo));

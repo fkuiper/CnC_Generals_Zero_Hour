@@ -59,7 +59,7 @@ char * nstrdup(const char *str)
 
 	// eventually should be replaced with NEW when we go to the wwnew stuff.
 	char *retval = W3DNEWARRAY char [strlen(str) + 1];
-	strcpy(retval, str);
+	strcpy_s(retval, strlen(retval), str);
 	return retval;
 }
 

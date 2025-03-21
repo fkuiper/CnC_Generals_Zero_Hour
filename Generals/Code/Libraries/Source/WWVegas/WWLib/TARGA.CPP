@@ -711,7 +711,7 @@ long Targa::Save(const char* name, long flags, bool addextension)
 			if (!error) {
 
 				mExtension.ExtSize = 495;
-				strncpy(mExtension.SoftID, "Denzil's Targa Code", 41);
+				strncpy_s(mExtension.SoftID, "Denzil's Targa Code", 41);
 				mExtension.SoftVer.Number = (1 * 100);
 				mExtension.SoftVer.Letter = 0;
 
@@ -733,7 +733,7 @@ long Targa::Save(const char* name, long flags, bool addextension)
 		if (!error)
 			{
 			footer.Developer = 0;
-			strncpy(footer.Signature, TGA2_SIGNATURE, 16);
+			strncpy_s(footer.Signature, TGA2_SIGNATURE, 16);
 			footer.RsvdChar = '.';
 			footer.BZST = 0;
 

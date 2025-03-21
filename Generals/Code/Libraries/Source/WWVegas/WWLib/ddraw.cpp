@@ -271,7 +271,7 @@ void Process_DD_Result(HRESULT result, int display_ok_msg)
 	**	Since it fell out of the above loop, this must be an unrecognized error code.
 	*/
 	char str[80];
-	sprintf(str, "DDRAW.DLL Error code = %08X", result);
+	sprintf_s(str, "DDRAW.DLL Error code = %08X", result);
 	MessageBox(MainWindow, str, "Direct X", MB_ICONEXCLAMATION|MB_OK);
 }
 

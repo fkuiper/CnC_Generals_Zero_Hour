@@ -164,7 +164,7 @@ private:
 	{
 		LegacyMaterialClass(void) : Name(NULL),VertexMaterialIdx(0),ShaderIdx(0),TextureIdx(0)	{ }
 		~LegacyMaterialClass(void)	{ if (Name) free(Name); }		
-		void		Set_Name(const char * name) { if (Name) free(Name); Name = NULL; if (name) Name = strdup(name); }
+		void		Set_Name(const char * name) { if (Name) free(Name); Name = NULL; if (name) Name = _strdup(name); }
 		
 		char *	Name;
 		int		VertexMaterialIdx;
@@ -275,10 +275,10 @@ WW3DErrorType MeshModelClass::Load_W3D(ChunkLoadClass & cload)
 	memset(tmpname,0,namelen);
 
 	if (strlen(context->Header.ContainerName) > 0) {
-		strcpy(tmpname,context->Header.ContainerName);
-		strcat(tmpname,".");
+		strcpy_s(tmpname, namelen, context->Header.ContainerName);
+		strcat_s(tmpname, namelen, ".");
 	}
-	strcat(tmpname,context->Header.MeshName);
+	strcat_s(tmpname, namelen, context->Header.MeshName);
 
 	Set_Name(tmpname);
 
@@ -2060,7 +2060,8 @@ void MeshLoadContextClass::Add_Legacy_Material(ShaderClass shader,VertexMaterial
 	LegacyMaterialClass * mat = W3DNEW LegacyMaterialClass;
 
 	// add the shader if it is unique
-	for (int si=0; si<Shaders.Count(); si++) {
+	int si = 0;
+	for (; si < Shaders.Count(); si++) {
 		if (Shaders[si] == shader) break;
 	}
 	if (si == Shaders.Count()) {
@@ -2074,7 +2075,8 @@ void MeshLoadContextClass::Add_Legacy_Material(ShaderClass shader,VertexMaterial
 		mat->VertexMaterialIdx = -1;
 	} else {
 		unsigned long crc = vmat->Get_CRC();	
-		for (int vi=0; vi<VertexMaterialCrcs.Count(); vi++) {
+		int vi = 0;
+		for (; vi<VertexMaterialCrcs.Count(); vi++) {
 			if (VertexMaterialCrcs[vi] == crc) break;
 		}
 		if (vi == VertexMaterials.Count()) {
@@ -2090,9 +2092,10 @@ void MeshLoadContextClass::Add_Legacy_Material(ShaderClass shader,VertexMaterial
 	if (tex == NULL) {
 		mat->TextureIdx = -1;
 	} else {
-		for (int ti=0; ti<Textures.Count(); ti++) {
+		int ti = 0;
+		for (; ti<Textures.Count(); ti++) {
 			if (Textures[ti] == tex) break;
-			if (stricmp(Textures[ti]->Get_Texture_Name(),tex->Get_Texture_Name()) == 0) break;
+			if (_stricmp(Textures[ti]->Get_Texture_Name(),tex->Get_Texture_Name()) == 0) break;
 		}
 		if (ti == Textures.Count()) {
 			mat->TextureIdx = Add_Texture(tex);

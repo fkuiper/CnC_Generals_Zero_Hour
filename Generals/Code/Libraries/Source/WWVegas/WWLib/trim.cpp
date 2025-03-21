@@ -71,7 +71,7 @@ char * strtrim(char * buffer)
 			source++;
 		}
 		if (source != buffer) {
-			strcpy(buffer, source);
+			strcpy_s(buffer, sizeof(buffer), source);
 		}
 
 		/*
@@ -100,7 +100,7 @@ wchar_t * wcstrim(wchar_t * buffer)
 			source++;
 		}
 		if (source != buffer) {
-			wcscpy(buffer, source);
+			wcscpy_s(buffer, sizeof(buffer), source);
 		}
 
 		/*

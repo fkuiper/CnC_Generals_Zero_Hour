@@ -112,7 +112,7 @@ struct ChunkHeader
 
 struct MicroChunkHeader
 {
-	MicroChunkHeader() {}
+	MicroChunkHeader() : MicroChunkHeader(0, 0) {}
 	MicroChunkHeader(uint8 type, uint8 size) { ChunkType = type, ChunkSize = size; }
 
 	void		Set_Type(uint8 type)						{ ChunkType = type; }

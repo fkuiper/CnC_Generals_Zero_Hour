@@ -94,7 +94,7 @@ void HTreeClass::Init_Default(void)
 	Pivot[0].BaseTransform.Make_Identity();
 	Pivot[0].Transform.Make_Identity();
 	Pivot[0].IsVisible = true;
-	strcpy(Pivot[0].Name,"RootTransform");
+	strcpy_s(Pivot[0].Name, W3D_NAME_LEN, "RootTransform");
 	//::strcpy (Name, "Default");
 	Name[0] = 0;
 	return ;
@@ -273,7 +273,7 @@ bool HTreeClass::read_pivots(ChunkLoadClass & cload,bool pre30)
 		Pivot[0].BaseTransform.Make_Identity();
 		Pivot[0].Transform.Make_Identity();
 		Pivot[0].IsVisible = true;
-		strcpy(Pivot[0].Name,"RootTransform");
+		strcpy_s(Pivot[0].Name, W3D_NAME_LEN, "RootTransform");
 		first_piv++;
 	}
 
@@ -745,8 +745,8 @@ void HTreeClass::Combo_Update
 #endif
 			float	weight_total = 0;
 			int wcount = 0;
-
-			for ( int anim_num = 0; anim_num < anim->Get_Num_Anims(); anim_num++ ) {
+			int anim_num = 0;
+			for (; anim_num < anim->Get_Num_Anims(); anim_num++ ) {
 
 				HAnimClass *motion = anim->Get_Motion( anim_num );
 
@@ -860,7 +860,7 @@ void HTreeClass::Combo_Update
 int HTreeClass::Get_Bone_Index(const char * name) const
 {
 	for (int i=0; i < NumPivots; i++) {
-		if (stricmp(Pivot[i].Name,name) == 0) {
+		if (_stricmp(Pivot[i].Name,name) == 0) {
 			return i;
 		}
 	}

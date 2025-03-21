@@ -380,7 +380,7 @@ int INIClass::Load(Straw & ffile)
 			if (ptr != NULL) *ptr = '\0';
 			strtrim(buffer);
 			char section[64];
-			strcpy(section, buffer);
+			strcpy_s(section, buffer);
 
 			/*
 			**	Read in the entries of this section.
@@ -437,7 +437,7 @@ int INIClass::Load(Straw & ffile)
 			char * ptr = strchr(buffer, ']');
 			if (ptr != NULL) *ptr = '\0';
 			strtrim(buffer);
-			INISection * secptr = W3DNEW INISection(strdup(buffer));
+			INISection * secptr = W3DNEW INISection(_strdup(buffer));
 			if (secptr == NULL) {
 				Clear();
 				return(false);
@@ -483,7 +483,7 @@ int INIClass::Load(Straw & ffile)
 					divider = " ";
 
 
-				INIEntry * entryptr = W3DNEW INIEntry(strdup(buffer), strdup(divider));
+				INIEntry * entryptr = W3DNEW INIEntry(_strdup(buffer), _strdup(divider));
 				if (entryptr == NULL) {
 					delete secptr;
 					Clear();
@@ -799,7 +799,7 @@ unsigned INIClass::Enumerate_Entries(const char *Section, const char * Entry_Pre
 	char entry[256];
 	do 
 	{
-		sprintf(entry, "%s%d", Entry_Prefix, count);
+		sprintf_s(entry, "%s%d", Entry_Prefix, count);
 		present = Is_Present(Section, entry);
 		if(present)
 			count++;
@@ -851,7 +851,7 @@ bool INIClass::Put_UUBlock(char const * section, void const * block, int len)
 		buffer[length] = '\0';
 		if (length == 0) break;
 
-		sprintf(sbuffer, "%d", counter);
+		sprintf_s(sbuffer, "%d", counter);
 		Put_String(section, sbuffer, buffer);
 		counter++;
 	}
@@ -938,11 +938,11 @@ bool INIClass::Put_TextBlock(char const * section, char const * text)
 
 		char buffer[128];
 
-		strncpy(buffer, text, 75);
+		strncpy_s(buffer, sizeof(buffer), text, 75);
 		buffer[75] = '\0';
 
 		char b[32];
-		sprintf(b, "%d", index);
+		sprintf_s(b, "%d", index);
 
 		/*
 		**	Scan backward looking for a good break position.
@@ -1065,15 +1065,15 @@ bool INIClass::Put_Int(char const * section, char const * entry, int number, int
 	switch (format) {
 		default:
 		case 0:
-			sprintf(buffer, "%d", number);
+			sprintf_s(buffer, "%d", number);
 			break;
 
 		case 1:
-			sprintf(buffer, "%Xh", number);
+			sprintf_s(buffer, "%Xh", number);
 			break;
 
 		case 2:
-			sprintf(buffer, "$%X", number);
+			sprintf_s(buffer, "$%X", number);
 			break;
 	}
 	return(Put_String(section, entry, buffer));
@@ -1112,10 +1112,10 @@ int INIClass::Get_Int(char const * section, char const * entry, int defvalue) co
 	if (entryptr && entryptr->Value != NULL) {
 
 		if (*entryptr->Value == '$') {
-			sscanf(entryptr->Value, "$%x", &defvalue);
+			sscanf_s(entryptr->Value, "$%x", &defvalue);
 		} else {
 			if (tolower(entryptr->Value[strlen(entryptr->Value)-1]) == 'h') {
-				sscanf(entryptr->Value, "%xh", &defvalue);
+				sscanf_s(entryptr->Value, "%xh", &defvalue);
 			} else {
 				defvalue = atoi(entryptr->Value);
 			}
@@ -1149,7 +1149,7 @@ bool INIClass::Put_Rect(char const * section, char const * entry, Rect const & v
 {
 	char buffer[64];
 
-	sprintf(buffer, "%d,%d,%d,%d", value.X, value.Y, value.Width, value.Height);
+	sprintf_s(buffer, "%d,%d,%d,%d", value.X, value.Y, value.Width, value.Height);
 	return(Put_String(section, entry, buffer));
 }	
 
@@ -1181,7 +1181,7 @@ Rect const INIClass::Get_Rect(char const * section, char const * entry, Rect con
 
 	if (Get_String(section, entry, "0,0,0,0", buffer, sizeof(buffer))) {
 		Rect retval = defvalue;
-		sscanf(buffer, "%d,%d,%d,%d", &retval.X, &retval.Y, &retval.Width, &retval.Height);
+		sscanf_s(buffer, "%d,%d,%d,%d", &retval.X, &retval.Y, &retval.Width, &retval.Height);
 		return(retval);
 	}
 	return(defvalue);
@@ -1212,7 +1212,7 @@ bool INIClass::Put_Hex(char const * section, char const * entry, int number)
 {
 	char buffer[MAX_LINE_LENGTH];
 
-	sprintf(buffer, "%X", number);
+	sprintf_s(buffer, "%X", number);
 	return(Put_String(section, entry, buffer));
 }
 
@@ -1247,7 +1247,7 @@ int INIClass::Get_Hex(char const * section, char const * entry, int defvalue) co
 
 	INIEntry * entryptr = Find_Entry(section, entry);
 	if (entryptr && entryptr->Value != NULL) {
-		sscanf(entryptr->Value, "%x", &defvalue);
+		sscanf_s(entryptr->Value, "%x", &defvalue);
 	}
 	return(defvalue);
 }
@@ -1282,7 +1282,7 @@ float INIClass::Get_Float(char const * section, char const * entry, float defval
 	INIEntry * entryptr = Find_Entry(section, entry);
 	if (entryptr != NULL && entryptr->Value != NULL) {
 		float val;
-		sscanf(entryptr->Value, "%f", &val);
+		sscanf_s(entryptr->Value, "%f", &val);
 		defvalue = val;
 		if (strchr(entryptr->Value, '%') != NULL) {
 			defvalue /= 100.0f;
@@ -1315,7 +1315,7 @@ bool INIClass::Put_Float(char const * section, char const * entry, double number
 {
 	char buffer[MAX_LINE_LENGTH];
 
-	sprintf(buffer, "%f", (float)number);
+	sprintf_s(buffer, "%f", (float)number);
 	return(Put_String(section, entry, buffer));
 }
 
@@ -1349,7 +1349,7 @@ bool INIClass::Put_String(char const * section, char const * entry, char const *
 	INISection * secptr = Find_Section(section);
 
 	if (secptr == NULL) {
-		secptr = W3DNEW INISection(strdup(section));
+		secptr = W3DNEW INISection(_strdup(section));
 		if (secptr == NULL) return(false);
 		SectionList->Add_Tail(secptr);
 		SectionIndex->Add_Index(secptr->Index_ID(), secptr);
@@ -1375,7 +1375,7 @@ bool INIClass::Put_String(char const * section, char const * entry, char const *
 	**	Create and add the new entry.
 	*/
 	if (string != NULL && strlen(string) > 0) {
-		entryptr = W3DNEW INIEntry(strdup(entry), strdup(string));
+		entryptr = W3DNEW INIEntry(_strdup(entry), _strdup(string));
 
 		if (entryptr == NULL) {
 			return(false);
@@ -1439,7 +1439,7 @@ int INIClass::Get_String(char const * section, char const * entry, char const * 
 		buffer[0] = '\0';
 		return(0);
 	} else {
-		strncpy(buffer, defvalue, size);
+		strncpy_s(buffer, sizeof(buffer), defvalue, size);
 		buffer[size-1] = '\0';
 		strtrim(buffer);
 		return(strlen(buffer));
@@ -1509,7 +1509,7 @@ char *INIClass::Get_Alloc_String(char const * section, char const * entry, char 
 	}
 
 	if (defvalue == NULL) return NULL;
-	return(strdup(defvalue));
+	return(_strdup(defvalue));
 }
 
 int INIClass::Get_List_Index(char const * section, char const * entry, int const defvalue, char *list[])
@@ -1522,7 +1522,7 @@ int INIClass::Get_List_Index(char const * section, char const * entry, int const
 	}
 
 	for (int lp = 0; list[lp]; lp++) {
-		if (stricmp(entryptr->Value, list[lp]) == 0) {
+		if (_stricmp(entryptr->Value, list[lp]) == 0) {
 			return lp;
 		}
 		assert(lp < 1000);
@@ -1541,14 +1541,14 @@ int INIClass::Get_Int_Bitfield(char const * section, char const * entry, int def
 	// get the bitfield value for each piece.
 	// int count	= 0; (gth) initailized but not referenced...
 	int retval	= 0;
-	char *str	= strdup(entryptr->Value);
+	char *str	= _strdup(entryptr->Value);
 
    int lp; 
-	for (char *token = strtok(str, "|+"); token; token = strtok(NULL, "|+")) {
+	for (char *token = strtok_s(str, "|+", NULL); token; token = strtok_s(NULL, "|+", NULL)) {
 		for (lp = 0; list[lp]; lp++) {
 			// if this list entry matches our string token then we need
 			// to set this bit.
-			if (stricmp(token, list[lp]) == 0) {
+			if (_stricmp(token, list[lp]) == 0) {
 				retval |= (1 << lp);
 				break;
 			}
@@ -1576,9 +1576,9 @@ int *	INIClass::Get_Alloc_Int_Array(char const * section, char const * entry, in
 	// count all the tokens in the string.  Each token should represent an
 	// integer number.
 	int count = 0;
-	char *str = strdup(entryptr->Value);
+	char *str = _strdup(entryptr->Value);
 	char *token;
-	for (token = strtok(str, " "); token; token = strtok(NULL, " ")) {
+	for (token = strtok_s(str, " ", NULL); token; token = strtok_s(NULL, " ", NULL)) {
 		count++;
 	}
 	free(str);
@@ -1587,8 +1587,8 @@ int *	INIClass::Get_Alloc_Int_Array(char const * section, char const * entry, in
 	// array to hold the tokens and parse out the actual values.
 	retval	= W3DNEWARRAY int[count+1];
 	count		= 0;
-	str		= strdup(entryptr->Value);
-	for (token = strtok(str, " "); token; token = strtok(NULL, " ")) {
+	str		= _strdup(entryptr->Value);
+	for (token = strtok_s(str, " ", NULL); token; token = strtok_s(NULL, " ", NULL)) {
 		retval[count] = atoi(token);
 		count++;
 	}
@@ -1701,7 +1701,7 @@ bool INIClass::Get_Bool(char const * section, char const * entry, bool defvalue)
 bool INIClass::Put_Point(char const * section, char const * entry, TPoint2D<int> const & value)
 {
 	char buffer[54];
-	sprintf(buffer, "%d,%d", value.X, value.Y);
+	sprintf_s(buffer, "%d,%d", value.X, value.Y);
 	return(Put_String(section, entry, buffer));
 }
 
@@ -1731,7 +1731,7 @@ TPoint2D<int> const INIClass::Get_Point(char const * section, char const * entry
 	char buffer[64];
 	if (Get_String(section, entry, "", buffer, sizeof(buffer))) {
 		int x,y;
-		sscanf(buffer, "%d,%d", &x, &y);
+		sscanf_s(buffer, "%d,%d", &x, &y);
 		return(TPoint2D<int>(x, y));
 	}
 	return(defvalue);
@@ -1760,7 +1760,7 @@ TPoint2D<int> const INIClass::Get_Point(char const * section, char const * entry
 bool INIClass::Put_Point(char const * section, char const * entry, TPoint3D<int> const & value)
 {
 	char buffer[54];
-	sprintf(buffer, "%d,%d,%d", value.X, value.Y, value.Z);
+	sprintf_s(buffer, "%d,%d,%d", value.X, value.Y, value.Z);
 	return(Put_String(section, entry, buffer));
 }
 
@@ -1791,7 +1791,7 @@ TPoint3D<int> const INIClass::Get_Point(char const * section, char const * entry
 	char buffer[64];
 	if (Get_String(section, entry, "", buffer, sizeof(buffer))) {
 		int x,y,z;
-		sscanf(buffer, "%d,%d,%d", &x, &y, &z);
+		sscanf_s(buffer, "%d,%d,%d", &x, &y, &z);
 		return(TPoint3D<int>(x, y, z));
 	}
 	return(defvalue);
@@ -1820,7 +1820,7 @@ TPoint3D<int> const INIClass::Get_Point(char const * section, char const * entry
 bool INIClass::Put_Point(char const * section, char const * entry, TPoint3D<float> const & value)
 {
 	char buffer[54];
-	sprintf(buffer, "%f,%f,%f", (float)value.X, (float)value.Y, (float)value.Z);
+	sprintf_s(buffer, "%f,%f,%f", (float)value.X, (float)value.Y, (float)value.Z);
 	return(Put_String(section, entry, buffer));
 }
 
@@ -1851,7 +1851,7 @@ TPoint3D<float> const INIClass::Get_Point(char const * section, char const * ent
 	char buffer[64];
 	if (Get_String(section, entry, "", buffer, sizeof(buffer))) {
 		float x,y,z;
-		sscanf(buffer, "%f,%f,%f", &x, &y, &z);
+		sscanf_s(buffer, "%f,%f,%f", &x, &y, &z);
 		return(TPoint3D<float>(x, y, z));
 	}
 	return(defvalue);
@@ -1883,7 +1883,7 @@ TPoint2D<float> const INIClass::Get_Point(char const * section, char const * ent
 	char buffer[64];
 	if (Get_String(section, entry, "", buffer, sizeof(buffer))) {
 		float x,y;
-		sscanf(buffer, "%f,%f", &x, &y);
+		sscanf_s(buffer, "%f,%f", &x, &y);
 		return(TPoint2D<float>(x, y));
 	}
 	return(defvalue);

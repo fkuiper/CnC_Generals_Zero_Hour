@@ -1235,7 +1235,7 @@ void WW3D::Make_Screen_Shot( const char * filename_base )
 
 	bool done = false;
 	while (!done) {
-		sprintf( filename, "%s%.2d.tga", filename_base, frame_number++);
+		sprintf_s(filename, 80, "%s%.2d.tga", filename_base, frame_number++);
 		FileClass*file=_TheFileFactory->Get_File( filename );
 		if ( file ) {
 			file->Open();

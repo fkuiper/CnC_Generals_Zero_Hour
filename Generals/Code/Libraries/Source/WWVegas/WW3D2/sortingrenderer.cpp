@@ -556,7 +556,8 @@ void SortingRendererClass::Flush_Sorting_Pool()
 			D3DXMATRIX d3d_mtx=(D3DXMATRIX&)state->sorting_state.world*(D3DXMATRIX&)state->sorting_state.view;
 			D3DXMatrixTranspose(&d3d_mtx,&d3d_mtx);
 			const Matrix4& mtx=(const Matrix4&)d3d_mtx;
-			for (unsigned i=0;i<state->vertex_count;++i,++src_verts) {
+			unsigned i;
+			for (i=0;i<state->vertex_count;++i,++src_verts) {
 				vertex_z_array[i] = (mtx[2][0] * src_verts->x + mtx[2][1] * src_verts->y + mtx[2][2] * src_verts->z + mtx[2][3]);
 				*dest_verts++=*src_verts;
 			}
@@ -632,7 +633,7 @@ void SortingRendererClass::Flush_Sorting_Pool()
 		DynamicIBAccessClass::WriteLockClass lock(&dyn_ib_access);
 		ShortVectorIStruct* sorted_polygon_index_array=(ShortVectorIStruct*)lock.Get_Index_Array();
 
-		for (a=0;a<overlapping_polygon_count;++a) {
+		for (unsigned a=0;a<overlapping_polygon_count;++a) {
 			sorted_polygon_index_array[a]=tis[a].tri;
 		}
 	}

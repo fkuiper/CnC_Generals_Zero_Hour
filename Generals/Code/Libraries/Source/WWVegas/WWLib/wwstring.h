@@ -91,7 +91,7 @@ public:
 	inline const StringClass &operator= (TCHAR ch);
 
 	const StringClass &operator+= (const StringClass &string);
-	const StringClass &operator+= (const TCHAR *string);
+	const StringClass &operator+= (_In_ const TCHAR *string);
 	const StringClass &operator+= (TCHAR ch);
 
 	friend StringClass operator+ (const StringClass &string1, const StringClass &string2);
@@ -454,7 +454,7 @@ StringClass::Erase (int start_index, int char_count)
 //	operator+=
 ///////////////////////////////////////////////////////////////////
 inline const StringClass &
-StringClass::operator+= (const TCHAR *string)
+StringClass::operator+= (_In_ const TCHAR *string)
 {
 	WWASSERT (string != NULL);
 

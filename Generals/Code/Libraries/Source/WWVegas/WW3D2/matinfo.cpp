@@ -83,7 +83,7 @@ int MaterialInfoClass::Add_Texture(TextureClass * tex)
 int MaterialInfoClass::Get_Texture_Index(const char * name)
 {
 	for (int i=0; i<Textures.Count(); i++) {
-		if (stricmp(name,Textures[i]->Get_Texture_Name()) == 0) {
+		if (_stricmp(name,Textures[i]->Get_Texture_Name()) == 0) {
 			return i;
 		}
 	}
@@ -131,7 +131,7 @@ void MaterialInfoClass::Free(void)
 }
 
 
-MaterialRemapperClass::MaterialRemapperClass(MaterialInfoClass * src,MaterialInfoClass * dest) :
+MaterialRemapperClass::MaterialRemapperClass(_In_ MaterialInfoClass * src, _In_ MaterialInfoClass * dest) :
 	TextureCount(0),
 	TextureRemaps(NULL),
 	VertexMaterialCount(0),

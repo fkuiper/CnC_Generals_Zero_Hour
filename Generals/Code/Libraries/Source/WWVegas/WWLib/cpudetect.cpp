@@ -206,15 +206,15 @@ void CPUDetectClass::Init_Processor_Manufacturer()
 
 	ProcessorManufacturer = MANUFACTURER_UNKNOWN;
 
-	if (stricmp(VendorID, "GenuineIntel") == 0) ProcessorManufacturer = MANUFACTURER_INTEL;
-	else if (stricmp(VendorID, "AuthenticAMD") == 0) ProcessorManufacturer = MANUFACTURER_AMD;
-	else if (stricmp(VendorID, "AMD ISBETTER") == 0) ProcessorManufacturer = MANUFACTURER_AMD;
-	else if (stricmp(VendorID, "UMC UMC UMC") == 0) ProcessorManufacturer = MANUFACTURER_UMC;
-	else if (stricmp(VendorID, "CyrixInstead") == 0) ProcessorManufacturer = MANUFACTURER_CYRIX;
-	else if (stricmp(VendorID, "NexGenDriven") == 0) ProcessorManufacturer = MANUFACTURER_NEXTGEN;
-	else if (stricmp(VendorID, "CentaurHauls") == 0) ProcessorManufacturer = MANUFACTURER_VIA;
-	else if (stricmp(VendorID, "RiseRiseRise") == 0) ProcessorManufacturer = MANUFACTURER_RISE;
-	else if (stricmp(VendorID, "GenuineTMx86") == 0) ProcessorManufacturer = MANUFACTURER_TRANSMETA;
+	if (_stricmp(VendorID, "GenuineIntel") == 0) ProcessorManufacturer = MANUFACTURER_INTEL;
+	else if (_stricmp(VendorID, "AuthenticAMD") == 0) ProcessorManufacturer = MANUFACTURER_AMD;
+	else if (_stricmp(VendorID, "AMD ISBETTER") == 0) ProcessorManufacturer = MANUFACTURER_AMD;
+	else if (_stricmp(VendorID, "UMC UMC UMC") == 0) ProcessorManufacturer = MANUFACTURER_UMC;
+	else if (_stricmp(VendorID, "CyrixInstead") == 0) ProcessorManufacturer = MANUFACTURER_CYRIX;
+	else if (_stricmp(VendorID, "NexGenDriven") == 0) ProcessorManufacturer = MANUFACTURER_NEXTGEN;
+	else if (_stricmp(VendorID, "CentaurHauls") == 0) ProcessorManufacturer = MANUFACTURER_VIA;
+	else if (_stricmp(VendorID, "RiseRiseRise") == 0) ProcessorManufacturer = MANUFACTURER_RISE;
+	else if (_stricmp(VendorID, "GenuineTMx86") == 0) ProcessorManufacturer = MANUFACTURER_TRANSMETA;
 }
 
 void CPUDetectClass::Process_Cache_Info(unsigned value)
@@ -813,7 +813,7 @@ void CPUDetectClass::Init_Processor_String()
 			case INTEL_PROCESSOR_PENTIUM4:						str+="Pentium4"; break;
 			}
 		}
-		strncpy(ProcessorString,str.Peek_Buffer(),sizeof(ProcessorString));
+		strncpy_s(ProcessorString, str.Peek_Buffer(), sizeof(ProcessorString));
 	}
 
 }
@@ -920,7 +920,10 @@ void CPUDetectClass::Init_OS()
 	OSVERSIONINFO os;
 #ifdef WIN32
    os.dwOSVersionInfoSize = sizeof(os);
-	GetVersionEx(&os);
+#pragma warning(push)
+#pragma warning(suppress : 4996)	// TODO: Refactor to fix: Warning	C4996	'GetVersionExA': was declared deprecated
+   GetVersionEx(&os);
+#pragma warning(pop)
 
    OSVersionNumberMajor = os.dwMajorVersion;
    OSVersionNumberMinor = os.dwMinorVersion;
@@ -1112,7 +1115,7 @@ void CPUDetectClass::Init_Compact_Log()
 	Get_OS_Info(os_info,OSVersionPlatformId,OSVersionNumberMajor,OSVersionNumberMinor,OSVersionBuildNumber);
 	COMPACTLOG(("%s\t",os_info.Code));
 
-	if (!stricmp(os_info.SubCode,"UNKNOWN")) {
+	if (!_stricmp(os_info.SubCode,"UNKNOWN")) {
 		COMPACTLOG(("%d\t",OSVersionBuildNumber&0xffff));
 	}
 	else {
