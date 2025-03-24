@@ -295,13 +295,13 @@
     <ClCompile>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <InlineFunctionExpansion>Default</InlineFunctionExpansion>
-      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
       <Optimization>Disabled</Optimization>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <WarningLevel>Level3</WarningLevel>
       <MinimalRebuild>true</MinimalRebuild>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\Pluglib;D:\3dsmax4\maxsdk\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Pluglib;..\..\..\Libraries\max4sdk\Include\Maxscrpt;..\..\..\Libraries\max4sdk\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AssemblerListingLocation>.\Debug\</AssemblerListingLocation>
       <BrowseInformation>true</BrowseInformation>
@@ -331,7 +331,7 @@
       <SubSystem>Windows</SubSystem>
       <OutputFile>Run\Max2w3d.dle</OutputFile>
       <ImportLibrary>.\Debug\Max2w3d.lib</ImportLibrary>
-      <AdditionalLibraryDirectories>..\Pluglib\Debug;D:\3dsmax4\maxsdk\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\Pluglib\Debug;..\..\..\Libraries\max4sdk\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>pluglibd.lib;mesh.lib;maxutil.lib;maxscrpt.lib;bmm.lib;comctl32.lib;core.lib;geom.lib;paramblk2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\max2w3d.def</ModuleDefinitionFile>
     </Link>

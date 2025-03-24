@@ -188,7 +188,7 @@ public:
 		AppDataChunk * appdata = node->GetAppDataChunk(W3DUtilityClassID,UTILITY_CLASS_ID,1);
 		if (!appdata) return FALSE;
 		W3DAppData1Struct *wdata = (W3DAppData1Struct*)(appdata->data);
-		return wdata->DamageRegion == RegionId;
+		return (wdata->DamageRegion == RegionId);
 	}
 
 protected:
@@ -214,17 +214,19 @@ protected:
  *   06/09/1997 GH  : Created.                                                                 * 
  *   10/17/2000 gth : Removed the old export code-path, everything goes through an origin now  *
  *=============================================================================================*/
-int W3dExportClass::DoExport
-(
-	const TCHAR *filename,
-	ExpInterface *export,
-	Interface *max, 
-	BOOL suppressPrompts, 
-	DWORD options
-)
+
+int W3dExportClass::DoExport(const TCHAR* name, ExpInterface* ei, Interface* i, BOOL suppressPrompts, DWORD options)
+//int W3dExportClass::DoExport
+//(
+//	const TCHAR *filename,
+//	ExpInterface *export,
+//	Interface *max, 
+//	BOOL suppressPrompts, 
+//	DWORD options
+//)
 {
-	ExportInterface = export;
-	MaxInterface = max;
+	ExportInterface = ei;
+	MaxInterface = i;
 	RootNode = NULL;
 	OriginList = NULL;
 	DamageRootList = NULL;
@@ -243,7 +245,7 @@ int W3dExportClass::DoExport
 		char rootname[_MAX_FNAME + 1];
 		char drivename[_MAX_DRIVE + 1];
 		char dirname[_MAX_DIR + 1];
-		_splitpath(filename, drivename, dirname, rootname, NULL);
+		_splitpath(name, drivename, dirname, rootname, NULL);
 		sprintf(CurrentExportPath, "%s%s", drivename, dirname);
 
 		/*
@@ -251,7 +253,7 @@ int W3dExportClass::DoExport
 		** MAX file being exported. This is so that it can use the old relative pathname of the
 		** W3D file containing the hierarchy.
 		*/
-		_splitpath(max->GetCurFilePath(), drivename, dirname, NULL, NULL);
+		_splitpath(i->GetCurFilePath(), drivename, dirname, NULL, NULL);
 		sprintf(CurrentScenePath, "%s%s", drivename, dirname);
 
 		/*
@@ -276,7 +278,7 @@ int W3dExportClass::DoExport
 		/*
 		** Create a chunk saver to write the w3d file with
 		*/
-		RawFileClass stream(filename);
+		RawFileClass stream(name);
 			
 		if (!stream.Open(FileClass::WRITE)) {
 			MessageBox(NULL,"Unable to open file.","Error",MB_OK | MB_SETFOREGROUND);
@@ -325,6 +327,7 @@ int W3dExportClass::DoExport
 	MaxInterface->RedrawViews(MaxInterface->GetTime());
 	return 1;
 }
+
 
 
 

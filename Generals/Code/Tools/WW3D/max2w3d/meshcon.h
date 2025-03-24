@@ -81,8 +81,8 @@ struct ConnectionStruct
 	INode	*						MeshINode;
 
 	// required by DynamicVectorClass...
-	operator == (const ConnectionStruct & that) { return false; }
-	operator != (const ConnectionStruct & that) { return !(*this==that); }
+	bool operator == (const ConnectionStruct & that) { return false; }
+	bool operator != (const ConnectionStruct & that) { return !(*this==that); }
 };
 
 

@@ -189,7 +189,8 @@ MeshDeformSetClass::Collapse_Keyframe_Data (int keyframe)
 	//
 	//	Collapse the vertex position data
 	//
-	for (int index = 0; index < verticies.Count (); index ++) {
+	int index = 0;
+	for (; index < verticies.Count (); index ++) {
 		VERT_INFO &info = verticies[index];
 		
 		//
@@ -210,7 +211,7 @@ MeshDeformSetClass::Collapse_Keyframe_Data (int keyframe)
 	//	Collapse the vertex color data
 	//
 	for (index = 0; index < colors.Count (); index ++) {
-		VERT_INFO &info = colors[index];
+		auto info = colors[index];
 		
 		//
 		//	If this vertex is unchanged, then remove it
@@ -303,7 +304,8 @@ MeshDeformSetClass::Update_Current_Data (void)
 	//
 	//	Record the vertex position data
 	//
-	for (int index = 0; index < m_VertexCount; index ++) {
+	int index = 0;
+	for (; index < m_VertexCount; index ++) {
 		
 		// Is this vertex's position different than the undeformed mesh?
 		Point3 orig		= m_pVertexArray[index];
@@ -642,7 +644,8 @@ MeshDeformSetClass::Apply_Position_Changes
 	// Determine where we should start interpolating this vert
 	//
 	int from = -1;
-	for (int key_frame = frame_to_check; (key_frame >= 0) && (from == -1); key_frame --) {
+	int key_frame = frame_to_check;
+	for (; (key_frame >= 0) && (from == -1); key_frame --) {
 		if (m_KeyFrames[key_frame]->affected_verts[vert]) {
 			from = key_frame;
 		}
@@ -740,7 +743,8 @@ MeshDeformSetClass::Apply_Color_Changes
 	// Determine where we should start interpolating this vert
 	//
 	int from = -1;
-	for (int key_frame = frame_to_check; (key_frame >= 0) && (from == -1); key_frame --) {
+	int key_frame = frame_to_check;
+	for (; (key_frame >= 0) && (from == -1); key_frame --) {
 		if (m_KeyFrames[key_frame]->affected_colors[vert]) {
 			from = key_frame;
 		}
@@ -824,7 +828,8 @@ MeshDeformSetClass::Apply_Color_Changes
 	// Determine where we should start interpolating this vert
 	//
 	int from = -1;
-	for (int key_frame = frame_to_check; (key_frame >= 0) && (from == -1); key_frame --) {
+	int key_frame = frame_to_check;
+	for (; (key_frame >= 0) && (from == -1); key_frame --) {
 		if (m_KeyFrames[key_frame]->affected_colors[vert_index]) {
 			from = key_frame;
 		}
@@ -904,7 +909,8 @@ MeshDeformSetClass::Update_Mesh (TriObject &tri_obj)
 		//
 		//	Copy the vertex colors from the triangle object
 		//
-		for (int vert_color = 0; vert_color < m_pMesh->numCVerts; vert_color ++) {
+		int vert_color = 0;
+		for (; vert_color < m_pMesh->numCVerts; vert_color ++) {
 			m_pMesh->vertCol[vert_color] = tri_obj.mesh.vertCol[vert_color];
 		}
 

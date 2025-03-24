@@ -215,7 +215,8 @@ IOResult GameMapsClass::Save(ISave * isave)
 	ULONG nb,f=0;
 
 	isave->BeginChunk(GAMEMAPS_ONOFF_CHUNK);
-	for (int i=0; i<NTEXMAPS; i++) {
+	int i = 0;
+	for (; i<NTEXMAPS; i++) {
 		if (TextureSlot[i].MapOn) f|= (1<<i);
 	}
 	isave->Write(&f,sizeof(f),&nb);			

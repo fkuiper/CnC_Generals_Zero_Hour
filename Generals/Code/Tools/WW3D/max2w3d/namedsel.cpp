@@ -93,7 +93,8 @@ void NamedSelSetList::Set_Size(int size)
 
 NamedSelSetList& NamedSelSetList::operator=(NamedSelSetList& from)
 {
-	for (int i=0; i<Sets.Count(); i++) {
+	int i = 0;
+	for (; i<Sets.Count(); i++) {
 		Delete_Set(i);
 	}
 	Sets.SetCount(0);

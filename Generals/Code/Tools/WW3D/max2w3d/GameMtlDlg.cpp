@@ -569,7 +569,8 @@ void GameMtlDlg::Set_Pass_Count_Dialog(void)
 
 		if(TheMtl->Get_Pass_Count() != res)
 		{
-			for(int i = 0; i < TheMtl->Get_Pass_Count(); i++)
+			int i = 0;
+			for(; i < TheMtl->Get_Pass_Count(); i++)
 			{
 				delete PassDialog[i];
 				PassDialog[i] = NULL;
