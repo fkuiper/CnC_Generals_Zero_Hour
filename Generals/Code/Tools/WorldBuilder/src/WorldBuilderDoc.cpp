@@ -424,9 +424,9 @@ AsciiString ConvertName(AsciiString name)
 {
 	char oldName[256];
 	char newName[256];
-	strcpy(oldName, name.str());
-	strcpy(newName, "GLA");
-	strcat(newName, oldName+strlen("Fundamentalist"));
+	strcpy_s(oldName, name.str());
+	strcpy_s(newName, "GLA");
+	strcat_s(newName, oldName+strlen("Fundamentalist"));
 	AsciiString swapName;
 	swapName.set(newName);
 	const ThingTemplate *tt = TheThingFactory->findTemplate(swapName);
@@ -440,9 +440,9 @@ AsciiString ConvertFaction(AsciiString name)
 {
 	char oldName[256];
 	char newName[256];
-	strcpy(oldName, name.str());
-	strcpy(newName, "FactionGLA");
-	strcat(newName, oldName+strlen("FactionFundamentalist"));
+	strcpy_s(oldName, name.str());
+	strcpy_s(newName, "FactionGLA");
+	strcat_s(newName, oldName+strlen("FactionFundamentalist"));
 	AsciiString swapName;
 	swapName.set(newName);
 	const PlayerTemplate* pt = ThePlayerTemplateStore->findPlayerTemplate(NAMEKEY(swapName));
@@ -2106,11 +2106,11 @@ void CWorldBuilderDoc::OnDumpDocToText(void)
 
 		char curbuf[ _MAX_PATH ];
 
-		strcpy(curbuf, dirbuf);
-		strcat(curbuf, m_strTitle);
-		strcat(curbuf, ".txt");
+		strcpy_s(curbuf, dirbuf);
+		strcat_s(curbuf, m_strTitle);
+		strcat_s(curbuf, ".txt");
 
-		theLogFile = fopen(curbuf, "w");
+		fopen_s(&theLogFile, curbuf, "w");
 		if (theLogFile == NULL)
 			throw;
 
@@ -2359,7 +2359,7 @@ writeRawDict( theLogFile, "TeamInfo",ti->getDict() );
 					AsciiString trigger = ti->getDict()->getAsciiString(TheKey_teamProductionCondition, &exists);
 
 					fprintf(theLogFile, "TEAM %s home '%s', priority %s, condition '%s',\n", teamName.str(),
-						waypoint.str(), pri, trigger.str());
+						waypoint.str(), pri.GetBuffer(), trigger.str());
 					fprintf(theLogFile, "  UNITS:");
 					fprintUnit(theLogFile, ti->getDict(), TheKey_teamUnitMinCount1, TheKey_teamUnitMaxCount1, TheKey_teamUnitType1);
 					fprintUnit(theLogFile, ti->getDict(), TheKey_teamUnitMinCount2, TheKey_teamUnitMaxCount2, TheKey_teamUnitType2);

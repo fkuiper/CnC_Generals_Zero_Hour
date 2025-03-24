@@ -85,15 +85,15 @@ BOOL MeshMoldOptions::OnInitDialog()
 		char				fileBuf[_MAX_PATH];
 		Int					i;
 
-		strcpy(dirBuf, ".\\data\\Editor\\Molds");
+		strcpy_s(dirBuf, ".\\data\\Editor\\Molds");
 		int len = strlen(dirBuf);
 
 		if (len > 0 && dirBuf[len - 1] != '\\') {
 			dirBuf[len++] = '\\';
 			dirBuf[len] = 0;
 		}
-		strcpy(findBuf, dirBuf);
-		strcat(findBuf, "*.w3d");
+		strcpy_s(findBuf, dirBuf);
+		strcat_s(findBuf, "*.w3d");
 
 		FilenameList filenameList;
 		TheFileSystem->getFileListInDirectory(AsciiString(dirBuf), AsciiString("*.w3d"), filenameList, FALSE);
@@ -106,7 +106,7 @@ BOOL MeshMoldOptions::OnInitDialog()
 
 				len = filename.getLength();
 				if (len<5) continue;
-				strcpy(fileBuf, filename.str());
+				strcpy_s(fileBuf, filename.str());
 				for (i=strlen(fileBuf)-1; i>0; i--) {
 					if (fileBuf[i] == '.') {
 						// strip off .w3d file extension.
@@ -143,7 +143,7 @@ BOOL MeshMoldOptions::OnInitDialog()
 void MeshMoldOptions::setHeight(Real height) 
 { 
 	char buffer[50];
-	sprintf(buffer, "%.2f", height);
+	sprintf_s(buffer, "%.2f", height);
 	m_currentHeight = height;
 	if (m_staticThis && !m_staticThis->m_updating) {
 		CWnd *pEdit = m_staticThis->GetDlgItem(IDC_HEIGHT_EDIT);
@@ -155,7 +155,7 @@ void MeshMoldOptions::setHeight(Real height)
 void MeshMoldOptions::setScale(Real scale) 
 { 
 	char buffer[50];
-	sprintf(buffer, "%d", (int)floor(scale*100));
+	sprintf_s(buffer, "%d", (int)floor(scale*100));
 	m_currentScale = scale;
 	if (m_staticThis && !m_staticThis->m_updating) {
 		CWnd *pEdit = m_staticThis->GetDlgItem(IDC_SCALE_EDIT);
@@ -167,7 +167,7 @@ void MeshMoldOptions::setScale(Real scale)
 void MeshMoldOptions::setAngle(Int angle) 
 { 
 	char buffer[50];
-	sprintf(buffer, "%d", angle);
+	sprintf_s(buffer, "%d", angle);
 	m_currentAngle = angle;
 	if (m_staticThis && !m_staticThis->m_updating) {
 		CWnd *pEdit = m_staticThis->GetDlgItem(IDC_ANGLE_EDIT);
@@ -297,7 +297,7 @@ void MeshMoldOptions::OnChangeScaleEdit()
 			pEdit->GetWindowText(buffer, sizeof(buffer));
 			Int scale;
 			m_updating = true;
-			if (1==sscanf(buffer, "%d", &scale)) {
+			if (1==sscanf_s(buffer, "%d", &scale)) {
 				m_currentScale = scale/100.0f;
 				MeshMoldTool::updateMeshLocation(false);
 			}
@@ -314,7 +314,7 @@ void MeshMoldOptions::OnChangeHeightEdit()
 			pEdit->GetWindowText(buffer, sizeof(buffer));
 			Real height;
 			m_updating = true;
-			if (1==sscanf(buffer, "%f", &height)) {
+			if (1==sscanf_s(buffer, "%f", &height)) {
 				m_currentHeight = height;
 				MeshMoldTool::updateMeshLocation(false);
 			}
@@ -331,7 +331,7 @@ void MeshMoldOptions::OnChangeAngleEdit()
 			pEdit->GetWindowText(buffer, sizeof(buffer));
 			Int angle;
 			m_updating = true;
-			if (1==sscanf(buffer, "%d", &angle)) {
+			if (1==sscanf_s(buffer, "%d", &angle)) {
 				m_currentAngle = angle;
 				MeshMoldTool::updateMeshLocation(false);
 			}

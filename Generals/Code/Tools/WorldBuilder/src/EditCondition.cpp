@@ -106,7 +106,7 @@ void EditCondition::formatConditionText(Int parameterNdx) {
 	cf.bCharSet = DEFAULT_CHARSET;
 	cf.yHeight = 14;
 	cf.bPitchAndFamily = FF_DONTCARE;
-	strcpy(cf.szFaceName, "MS Sans Serif");
+	strcpy_s(cf.szFaceName, "MS Sans Serif");
 	cf.dwEffects = 0;
 	m_myEditCtrl.SetDefaultCharFormat(cf);
 

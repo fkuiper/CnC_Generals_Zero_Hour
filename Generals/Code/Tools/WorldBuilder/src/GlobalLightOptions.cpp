@@ -156,8 +156,8 @@ static void SpitLights()
 	lights[0] = "";
 	lights[1] = "2";
 	lights[2] = "3";
-
-	for (Int time=0; time<4; time++) {
+	Int time = 0;
+	for (; time<4; time++) {
 		for (Int light=0; light<3; light++) {
 			redA = TheGlobalData->m_terrainLighting[time+TIME_OF_DAY_FIRST][light].ambient.red*255;
 			greenA = TheGlobalData->m_terrainLighting[time+TIME_OF_DAY_FIRST][light].ambient.green*255;
@@ -626,7 +626,7 @@ BOOL GlobalLightOptions::GetInt(Int ctrlID, Int *rVal)
 	if (pEdit) {
 		pEdit->GetWindowText(buffer, sizeof(buffer));
 		Int val;
-		if (1==sscanf(buffer, "%d", &val)) {
+		if (1==sscanf_s(buffer, "%d", &val)) {
 			*rVal = val;
 			return true;
 		}

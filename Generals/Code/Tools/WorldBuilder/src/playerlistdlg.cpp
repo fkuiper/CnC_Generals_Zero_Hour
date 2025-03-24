@@ -87,7 +87,7 @@ static void ensureValidPlayerName(Dict *d)
 {
 	// ensure there are no illegal chars in it. (in particular, no spaces!)
 	char buf[1024];
-	strcpy(buf, d->getAsciiString(TheKey_playerName).str());
+	strcpy_s(buf, d->getAsciiString(TheKey_playerName).str());
 	for (char* p = buf; *p; ++p)
 		if (!islegalplayernamechar(*p))
 			*p = '_';
@@ -453,7 +453,8 @@ void PlayerListDlg::updateTheUI(void)
 	list->ResetContent();
 
 	Int len = m_sides.getNumSides();
-	for (int i = 0; i < len; i++)
+	int i = 0;
+	for (; i < len; i++)
 	{
 		Dict *d = m_sides.getSideInfo(i)->getDict();
 		AsciiString name = d->getAsciiString(TheKey_playerName);
@@ -562,11 +563,11 @@ void PlayerListDlg::updateTheUI(void)
 		pname = playerNameForUI(m_sides, i);
 
 		rstr = calcRelationStr(m_sides, m_curPlayerIdx, i);
-		sprintf(buffer, "%s: %s",pname.str(),rstr);
+		sprintf_s(buffer, "%s: %s",pname.str(),rstr);
 		regardOthers->AddString(buffer);
 
 		rstr = calcRelationStr(m_sides, i, m_curPlayerIdx);
-		sprintf(buffer, "%s: %s",pname.str(),rstr);
+		sprintf_s(buffer, "%s: %s",pname.str(),rstr);
 		regardMe->AddString(buffer);
 	}
 
@@ -687,7 +688,8 @@ void PlayerListDlg::OnSelectPlayerColor()
 		pCombo->GetWindowText(str);
 		Int index = -1;
 		Int numColors = TheMultiplayerSettings->getNumColors();
-		for (Int c=0; c<numColors; ++c)
+		Int c = 0;
+		for (; c<numColors; ++c)
 		{
 			MultiplayerColorDefinition *def = TheMultiplayerSettings->getColor(c);
 			if (!def)

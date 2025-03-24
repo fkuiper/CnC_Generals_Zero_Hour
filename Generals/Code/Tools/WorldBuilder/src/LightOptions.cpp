@@ -173,28 +173,28 @@ void LightOptions::OnChangeLightEdit()
 	CWnd *pEdit = m_staticThis->GetDlgItem(IDC_RA_EDIT);
 	if (pEdit) {
 		pEdit->GetWindowText(buffer, sizeof(buffer));
-		if (1==sscanf(buffer, "%f", &clr)) lightAmbientColor.red = clr;
+		if (1==sscanf_s(buffer, "%f", &clr)) lightAmbientColor.red = clr;
 	}
 	pEdit = m_staticThis->GetDlgItem(IDC_GA_EDIT);
 	if (pEdit) {
 		pEdit->GetWindowText(buffer, sizeof(buffer));
-		if (1==sscanf(buffer, "%f", &clr)) lightAmbientColor.green = clr;
+		if (1==sscanf_s(buffer, "%f", &clr)) lightAmbientColor.green = clr;
 	}
 	pEdit = m_staticThis->GetDlgItem(IDC_BA_EDIT);
 	if (pEdit) {
 		pEdit->GetWindowText(buffer, sizeof(buffer));
-		if (1==sscanf(buffer, "%f", &clr)) lightAmbientColor.blue = clr;
+		if (1==sscanf_s(buffer, "%f", &clr)) lightAmbientColor.blue = clr;
 	}
 	pEdit = m_staticThis->GetDlgItem(IDC_HEIGHT_EDIT);
 	Real r;
 	if (pEdit) {
 		pEdit->GetWindowText(buffer, sizeof(buffer));
-		if (1==sscanf(buffer, "%f", &r)) lightHeightAboveTerrain = r;
+		if (1==sscanf_s(buffer, "%f", &r)) lightHeightAboveTerrain = r;
 	}
 	pEdit = m_staticThis->GetDlgItem(IDC_RADIUS_EDIT);
 	if (pEdit) {
 		pEdit->GetWindowText(buffer, sizeof(buffer));
-		if (1==sscanf(buffer, "%f", &r)) lightOuterRadius = r;
+		if (1==sscanf_s(buffer, "%f", &r)) lightOuterRadius = r;
 	}
 	lightDiffuseColor.red = 0;
 	lightDiffuseColor.green = 0;

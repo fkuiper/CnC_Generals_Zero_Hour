@@ -172,7 +172,7 @@ void TerrainModal::addTerrain(char *pPath, Int terrainNdx, HTREEITEM parent)
 
 		}  // end for i
 
-		strcpy( buffer, terrain->getName().str() );
+		strcpy_s( buffer, _MAX_PATH, terrain->getName().str() );
 
 		doAdd = TRUE;
 						
@@ -234,7 +234,7 @@ void TerrainModal::updateTextures(void)
 		}
 		const char *tName = WorldHeightMapEdit::getTexClassName(i).str();
 		char path[_MAX_PATH];
-		strncpy(path, tName, _MAX_PATH-2);
+		strncpy_s(path, _MAX_PATH, tName, _MAX_PATH-2);
 		addTerrain(path, i, TVI_ROOT);
 	}
 	setTerrainTreeViewSelection(TVI_ROOT, m_currentFgTexture);

@@ -121,11 +121,11 @@ void OpenMap::populateMapListbox( Bool systemMaps )
 	char				fileBuf[_MAX_PATH];
 
 	if (systemMaps)
-		strcpy(dirBuf, "Maps\\");
+		strcpy_s(dirBuf, "Maps\\");
 	else
 	{
-		strcpy(dirBuf, TheGlobalData->getPath_UserData().str());
-		strcat(dirBuf, "Maps\\");
+		strcpy_s(dirBuf, TheGlobalData->getPath_UserData().str());
+		strcat_s(dirBuf, "Maps\\");
 	}
 
 	int len = strlen(dirBuf);
@@ -137,8 +137,8 @@ void OpenMap::populateMapListbox( Bool systemMaps )
 	CListBox *pList = (CListBox *)this->GetDlgItem(IDC_OPEN_LIST);
 	if (pList == NULL) return;
 	pList->ResetContent();
-	strcpy(findBuf, dirBuf);
-	strcat(findBuf, "*.*");
+	strcpy_s(findBuf, dirBuf);
+	strcat_s(findBuf, "*.*");
 
 	Bool found = false;
 
@@ -151,11 +151,11 @@ void OpenMap::populateMapListbox( Bool systemMaps )
 				continue;
 			}
 
-			strcpy(fileBuf, dirBuf);
-			strcat(fileBuf, findData.cFileName);
-			strcat(fileBuf, "\\");
-			strcat(fileBuf, findData.cFileName);
-			strcat(fileBuf, ".map");
+			strcpy_s(fileBuf, dirBuf);
+			strcat_s(fileBuf, findData.cFileName);
+			strcat_s(fileBuf, "\\");
+			strcat_s(fileBuf, findData.cFileName);
+			strcat_s(fileBuf, ".map");
 			try {
 				CFileStatus status;
 				if (CFile::GetStatus(fileBuf, status)) {

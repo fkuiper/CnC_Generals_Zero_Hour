@@ -44,7 +44,7 @@ SplashScreen::SplashScreen()
 	lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
 	lf.lfQuality = DEFAULT_QUALITY;
 	lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
-	strcpy(lf.lfFaceName, "Arial");
+	strcpy_s(lf.lfFaceName, "Arial");
 	
 	m_font.CreateFontIndirect(&lf);
 }

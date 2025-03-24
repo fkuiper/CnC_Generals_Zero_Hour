@@ -85,21 +85,22 @@
     <ClCompile>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <InlineFunctionExpansion>Default</InlineFunctionExpansion>
-      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
       <Optimization>Disabled</Optimization>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <WarningLevel>Level3</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MinimalRebuild>true</MinimalRebuild>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <AdditionalIncludeDirectories>./include;./res;../../libraries/include;../../gameengine/include;../../gameenginedevice/include/;../../libraries/source/wwvegas;../../libraries/source/wwvegas/ww3d2;../../libraries/source/wwvegas/wwdebug;../../libraries/source/wwvegas/wwlib;../../libraries/source/wwvegas/wwmath;../../libraries/source/wwvegas/wwsaveload;../../Libraries/Source/Compression;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WWDEBUG;_DEBUG;EDITOR;WIN32;_WINDOWS;REGEX_MALLOC;STDC_HEADERS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../Libraries/Include/MSS;../../Libraries/DX90SDK;./include;./res;../../libraries/include;../../gameengine/include;../../gameenginedevice/include/;../../libraries/source/wwvegas;../../libraries/source/wwvegas/ww3d2;../../libraries/source/wwvegas/wwdebug;../../libraries/source/wwvegas/wwlib;../../libraries/source/wwvegas/wwmath;../../libraries/source/wwvegas/wwsaveload;../../Libraries/Source/Compression;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WWDEBUG;_DEBUG;EDITOR;WIN32;_WINDOWS;REGEX_MALLOC;STDC_HEADERS;WIN32_LEAN_AND_MEAN;DIRECT3D_VERSION=0x0800;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AssemblerListingLocation>.\Debug\</AssemblerListingLocation>
       <BrowseInformation>true</BrowseInformation>
       <PrecompiledHeaderOutputFile>.\Debug\WorldBuilder.pch</PrecompiledHeaderOutputFile>
       <ObjectFileName>.\Debug\</ObjectFileName>
       <ProgramDataBaseFileName>.\Debug\</ProgramDataBaseFileName>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <ExceptionHandling>Async</ExceptionHandling>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -122,8 +123,9 @@
       <SubSystem>Windows</SubSystem>
       <IgnoreSpecificDefaultLibraries>libcd;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <OutputFile>../../../Run/WorldBuilderD.exe</OutputFile>
-      <AdditionalLibraryDirectories>..\..\Libraries\Lib;..\..\GameEngine\Lib;..\..\GameEngineDevice\Lib;..\..\GameEngine;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>BenchmarkD.lib;dinput.lib;ddraw.lib;d3dx8.lib;mss32.lib;d3d8.lib;winmm.lib;vfw32.lib;dsound.lib;wsock32.lib;imm32.lib;wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\Libraries\Include\MSS\Lib;..\..\Libraries\DX90SDK\Lib\x86;..\..\Libraries\Lib;..\..\GameEngine\Lib;..\..\GameEngineDevice\Lib;..\..\GameEngine;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>dinput.lib;ddraw.lib;d3dx8.lib;mss32.lib;d3d8.lib;winmm.lib;vfw32.lib;dsound.lib;wsock32.lib;imm32.lib;wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

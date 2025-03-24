@@ -121,11 +121,12 @@ void EditObjectParameter::addObject( const ThingTemplate *thingTemplate  )
 		// first sort by Side, either create or find the tree item with matching side name
 		AsciiString side = thingTemplate->getDefaultOwningSide();
 		DEBUG_ASSERTCRASH(!side.isEmpty(), ("NULL default side in template\n") );
-		strcpy( buffer, side.str() );
+		strcpy_s( buffer, side.str() );
 		parent = findOrAdd( parent, buffer );
 
 		// next tier uses the editor sorting that design can specify in the INI
-		for( EditorSortingType i = ES_FIRST; 
+		EditorSortingType i = ES_FIRST;
+		for( ; 
 				 i < ES_NUM_SORTING_TYPES;
 				 i = (EditorSortingType)(i + 1) )
 		{

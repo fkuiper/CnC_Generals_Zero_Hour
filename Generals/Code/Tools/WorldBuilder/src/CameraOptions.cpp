@@ -121,7 +121,7 @@ BOOL CameraOptions::getReal(Int ctrlID, Real *rVal)
 	if (pEdit) {
 		pEdit->GetWindowText(buffer, sizeof(buffer));
 		Real val;
-		if (1==sscanf(buffer, "%f", &val)) {
+		if (1==sscanf_s(buffer, "%f", &val)) {
 			*rVal = val;
 			return true;
 		}

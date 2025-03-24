@@ -417,14 +417,14 @@ void WorldHeightMapEdit::loadDirectoryOfImages(char *pFilePath)
 	char				findBuf[_MAX_PATH];
 	char				fileBuf[_MAX_PATH];
 
-	strcpy(dirBuf, pFilePath);
+	strcpy_s(dirBuf, pFilePath);
 	int len = strlen(dirBuf);
 
 	if (len > 0 && dirBuf[len - 1] != '\\') {
 		dirBuf[len++] = '\\';
 		dirBuf[len] = 0;
 	}
-	strcpy(findBuf, dirBuf);
+	strcpy_s(findBuf, dirBuf);
 
 	FilenameList filenameList;
 	TheFileSystem->getFileListInDirectory(AsciiString(findBuf), AsciiString("*.*"), filenameList, TRUE);
@@ -436,8 +436,8 @@ void WorldHeightMapEdit::loadDirectoryOfImages(char *pFilePath)
 	do {
 		AsciiString filename = *it;
 
-		strcpy(fileBuf, dirBuf);
-		strcat(fileBuf, filename.str());
+		strcpy_s(fileBuf, dirBuf);
+		strcat_s(fileBuf, filename.str());
 		loadBitmap(fileBuf, filename.str());
 
 		++it;
@@ -457,7 +457,7 @@ void WorldHeightMapEdit::loadImagesFromTerrainType( TerrainType *terrain )
 	char buffer[ _MAX_PATH ];
 
 	// build path to texture file
-	sprintf( buffer, "%s%s", TERRAIN_TGA_DIR_PATH, terrain->getTexture().str() );
+	sprintf_s( buffer, "%s%s", TERRAIN_TGA_DIR_PATH, terrain->getTexture().str() );
 
 	// create ascii string for texture path
 	AsciiString texturePath( buffer );
@@ -780,7 +780,8 @@ void WorldHeightMapEdit::saveToFile(DataChunkOutput &chunkWriter)
 			chunkWriter.writeReal(TheGlobalData->m_terrainObjectsLighting[i+TIME_OF_DAY_FIRST][0].lightPos.y);
 			chunkWriter.writeReal(TheGlobalData->m_terrainObjectsLighting[i+TIME_OF_DAY_FIRST][0].lightPos.z);
 
-			for (Int j=1; j<MAX_GLOBAL_LIGHTS; j++)
+			Int j = 1;
+			for (; j<MAX_GLOBAL_LIGHTS; j++)
 			{	//save state of new lights added in version 3.
 				chunkWriter.writeReal(TheGlobalData->m_terrainObjectsLighting[i+TIME_OF_DAY_FIRST][j].ambient.red);
 				chunkWriter.writeReal(TheGlobalData->m_terrainObjectsLighting[i+TIME_OF_DAY_FIRST][j].ambient.green);
@@ -3030,7 +3031,7 @@ void WorldHeightMapEdit::updateForAdjacentCliffs(Int xIndex, Int yIndex,
 		Real smallU = TEX_PER_CELL/10.0f;
 		Real cliffAvgU;
 		Real tmpAvgU;
-		Real minUDelta = TEX_PER_CELL*0.7;
+		Real minUDelta = TEX_PER_CELL*0.7f;
 		Real uDelta;
 		// Adjust for "vertical" edges
 		if (lockCount==2) {
@@ -3350,7 +3351,7 @@ Int WorldHeightMapEdit::getNumBoundaries(void) const
 
 void WorldHeightMapEdit::getBoundary(Int ndx, ICoord2D* border) const
 {
-	if (!border || ndx < 0 || ndx >= m_boundaries.size()) {
+	if (!border || ndx < 0 || ndx >= (Int)m_boundaries.size()) {
 		DEBUG_CRASH(("Invalid border request. jkmcd"));
 		return;
 	}
@@ -3370,7 +3371,7 @@ void WorldHeightMapEdit::addBoundary(ICoord2D* boundaryToAdd)
 
 void WorldHeightMapEdit::changeBoundary(Int ndx, ICoord2D *border)
 {
-	if (!border || ndx < 0 || ndx >= m_boundaries.size()) {
+	if (!border || ndx < 0 || ndx >= (Int)m_boundaries.size()) {
 		DEBUG_CRASH(("Invalid border change request. jkmcd"));
 		return;
 	}
@@ -3385,7 +3386,9 @@ void WorldHeightMapEdit::removeLastBoundary(void)
 		return;
 	}
 	
-	m_boundaries.erase(&m_boundaries.back());
+	// TODO: Replaced next line, should test this!
+	//m_boundaries.erase(&m_boundaries.back());
+	m_boundaries.pop_back();
 }
 
 void WorldHeightMapEdit::findBoundaryNear(Coord3D *pt, float okDistance, Int *outNdx, Int *outHandle)

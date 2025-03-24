@@ -213,7 +213,7 @@ void ScriptProperties::OnChangeSecondsEdit()
 	CString text;
 	pEdit->GetWindowText(text);
 	Int theInt;
-	if (1==sscanf(text, "%d", &theInt)) {
+	if (1==sscanf_s(text, "%d", &theInt)) {
 		m_script->setDelayEvalSeconds(theInt);
 	}
 }

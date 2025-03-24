@@ -306,7 +306,7 @@ BOOL TeamIdentity::OnCommand(WPARAM wParam, LPARAM lParam)
 			CString txt;
 			pEdit->GetWindowText(txt);
 			Int theInt;
-			if (1==sscanf(txt, "%d", &theInt)) {
+			if (1==sscanf_s(txt, "%d", &theInt)) {
 				m_teamDict->setInt(key, theInt);
 			}
 			return true;

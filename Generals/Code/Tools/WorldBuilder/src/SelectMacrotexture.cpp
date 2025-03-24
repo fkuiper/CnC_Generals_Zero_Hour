@@ -77,14 +77,14 @@ BOOL SelectMacrotexture::OnInitDialog()
 		char				findBuf[_MAX_PATH];
 		char				fileBuf[_MAX_PATH];
 
-		strcpy(dirBuf, "..\\Art\\TestModelsHere");
+		strcpy_s(dirBuf, "..\\Art\\TestModelsHere");
 		int len = strlen(dirBuf);
 
 		if (len > 0 && dirBuf[len - 1] != '\\') {
 			dirBuf[len++] = '\\';
 			dirBuf[len] = 0;
 		}
-		strcpy(findBuf, dirBuf);
+		strcpy_s(findBuf, dirBuf);
 
 		FilenameList filenameList;
 		TheFileSystem->getFileListInDirectory(AsciiString(findBuf), AsciiString("*.tga"), filenameList, FALSE);
@@ -97,7 +97,7 @@ BOOL SelectMacrotexture::OnInitDialog()
 				AsciiString filename = *it;
 				len = filename.getLength();
 				if (len<5) continue;
-				strcpy(fileBuf, filename.str());
+				strcpy_s(fileBuf, filename.str());
 					::memset(&ins, 0, sizeof(ins));
 					ins.hParent = TVI_ROOT;
 					ins.hInsertAfter = TVI_SORT;

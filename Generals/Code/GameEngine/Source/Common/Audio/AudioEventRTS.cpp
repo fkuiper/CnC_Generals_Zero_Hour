@@ -340,7 +340,7 @@ void AudioEventRTS::generateFilename( void )
 
 
 		
-		if (BitTest(m_eventInfo->m_control, AC_RANDOM)) 
+		if (CNC_BitTest(m_eventInfo->m_control, AC_RANDOM)) 
 		{ 
 			if (m_isLogicalAudio) 
 			{
@@ -474,7 +474,7 @@ void AudioEventRTS::advanceNextPlayPortion( void )
 			m_portionToPlayNext = PP_Sound;
 			break;
 		case PP_Sound:
-			if (m_eventInfo && BitTest(m_eventInfo->m_control, AC_ALL)) 
+			if (m_eventInfo && CNC_BitTest(m_eventInfo->m_control, AC_ALL))
 			{
 				if (m_allCount == m_eventInfo->m_sounds.size()) {
 					m_portionToPlayNext = PP_Decay;

@@ -130,7 +130,7 @@ char const * WBGameFileClass::Set_Name( char const *filename )
 	}
 
 	if (TheFileSystem->doesFileExist(filename)) {
-		strcpy( m_filePath, filename );
+		strcpy_s( m_filePath, filename );
 		m_fileExists = true;
 	}
 	return m_filename;
@@ -308,7 +308,7 @@ BOOL CWorldBuilderApp::InitInstance()
 	TheNameKeyGenerator->init();
 
 #ifdef _AFXDLL
-	Enable3dControls();			// Call this when using MFC in a shared DLL
+	//Enable3dControls();			// Call this when using MFC in a shared DLL
 #else
 	Enable3dControlsStatic();	// Call this when linking to MFC statically
 #endif
@@ -350,18 +350,19 @@ BOOL CWorldBuilderApp::InitInstance()
 #if 1
 	// srj sez: put INI into our user data folder, not the ap dir
 	free((void*)m_pszProfileName);
-	strcpy(buf, TheGlobalData->getPath_UserData().str());
-	strcat(buf, "WorldBuilder.ini");
+	strcpy_s(buf, TheGlobalData->getPath_UserData().str());
+	strcat_s(buf, "WorldBuilder.ini");
 #else
 	strcat(buf, "//");
 	strcat(buf, m_pszProfileName);
 	free((void*)m_pszProfileName);
 #endif
-	m_pszProfileName = (const char *)malloc(strlen(buf)+2);
-	strcpy((char*)m_pszProfileName, buf);
+	int len = strlen(buf) + 2;
+	m_pszProfileName = (const char *)malloc(len);
+	strcpy_s((char*)m_pszProfileName, len, buf);
 
 	// ensure the user maps dir exists
-	sprintf(buf, "%sMaps\\", TheGlobalData->getPath_UserData().str());
+	sprintf_s(buf, "%sMaps\\", TheGlobalData->getPath_UserData().str());
 	CreateDirectory(buf, NULL);
 
 	// read the water settings from INI (must do prior to initing GameClient, apparently)

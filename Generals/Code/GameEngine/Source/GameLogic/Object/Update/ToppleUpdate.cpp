@@ -344,7 +344,7 @@ UpdateSleepTime ToppleUpdate::update()
 		else if( fabs(m_angularVelocity) >= VELOCITY_BOUNCE_SOUND_LIMIT )
 		{
 			// fast enough bounce to warrant the bounce fx
-			if( BitTest( m_options, TOPPLE_OPTIONS_NO_FX ) == FALSE )
+			if(CNC_BitTest( m_options, TOPPLE_OPTIONS_NO_FX ) == FALSE )
 				FXList::doFXObj(d->m_bounceFX, obj);
 		}
 	}

@@ -62,7 +62,7 @@ void WaterOptions::DoDataExchange(CDataExchange* pDX)
 void WaterOptions::setHeight(Int height) 
 { 
 	char buffer[50];
-	sprintf(buffer, "%d", height);
+	sprintf_s(buffer, "%d", height);
 	m_waterHeight = height;
 	if (m_staticThis && !m_staticThis->m_updating) {
 		CWnd *pEdit = m_staticThis->GetDlgItem(IDC_HEIGHT_EDIT);
@@ -93,7 +93,7 @@ void WaterOptions::updateTheUI(void)
 	pWnd = m_staticThis->GetDlgItem(IDC_SPACING);
 	char buffer[_MAX_PATH];
 	if (pWnd) {
-		sprintf(buffer, "%d", m_waterPointSpacing);
+		sprintf_s(buffer, "%d", m_waterPointSpacing);
 		pWnd->SetWindowText(buffer);
 	}
 }
@@ -475,7 +475,7 @@ void WaterOptions::OnChangeHeightEdit()
 		pEdit->GetWindowText(buffer, sizeof(buffer));
 		Int height;
 		m_updating = true;
-		if (1==sscanf(buffer, "%d", &height)) {
+		if (1==sscanf_s(buffer, "%d", &height)) {
 			m_waterHeight = height;
 			startUpdateHeight();
 			updateHeight();
@@ -497,10 +497,10 @@ void WaterOptions::OnChangeSpacingEdit()
 		pEdit->GetWindowText(buffer, sizeof(buffer));
 		Int height;
 		m_updating = true;
-		if (1==sscanf(buffer, "%d", &height)) {
+		if (1==sscanf_s(buffer, "%d", &height)) {
 			m_waterPointSpacing = height;
 		}	else {
-			sprintf(buffer, "%d", m_waterPointSpacing);
+			sprintf_s(buffer, "%d", m_waterPointSpacing);
 			pEdit->SetWindowText(buffer);
 		}
 		m_updating = false;

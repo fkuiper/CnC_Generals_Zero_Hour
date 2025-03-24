@@ -302,7 +302,7 @@ void TerrainMaterial::addTerrain(char *pPath, Int terrainNdx, HTREEITEM parent)
 		}  // end for i
 
 		// set the name in the tree view to that of the entry
-		strcpy( buffer, terrain->getName().str() );
+		strcpy_s( buffer, terrain->getName().str() );
 
 		doAdd = TRUE;
 	}  // end if
@@ -336,7 +336,7 @@ void TerrainMaterial::addTerrain(char *pPath, Int terrainNdx, HTREEITEM parent)
 	Int percent = (WorldHeightMapEdit::getTexClassNumTiles(terrainNdx)*100 + availableTiles/2) / availableTiles;
 
 	char label[_MAX_PATH];
-	sprintf(label, "%d%% %s", percent, buffer);
+	sprintf_s(label, "%d%% %s", percent, buffer);
 
 
 	if( doAdd )
@@ -369,7 +369,7 @@ void TerrainMaterial::updateTextures(WorldHeightMapEdit *pMap)
 		for (i=0; i<pMap->getNumTexClasses(); i++) {
 			char path[_MAX_PATH];
 			AsciiString uiName = pMap->getTexClassUiName(i);
-			strncpy(path, uiName.str(), _MAX_PATH-2);
+			strncpy_s(path, uiName.str(), _MAX_PATH-2);
 			m_staticThis->addTerrain(path, i, TVI_ROOT);
 		}
 		m_staticThis->m_updating = false;
@@ -402,10 +402,10 @@ void TerrainMaterial::OnChangeSizeEdit()
 			pEdit->GetWindowText(buffer, sizeof(buffer));
 			Int width;
 			m_updating = true;
-			if (1==sscanf(buffer, "%d", &width)) {
+			if (1==sscanf_s(buffer, "%d", &width)) {
 				m_currentWidth = width;
 				BigTileTool::setWidth(m_currentWidth);
-				sprintf(buffer, "%.1f FEET.", m_currentWidth*MAP_XY_FACTOR);
+				sprintf_s(buffer, "%.1f FEET.", m_currentWidth*MAP_XY_FACTOR);
 				pEdit = m_staticThis->GetDlgItem(IDC_WIDTH_LABEL);
 				if (pEdit) pEdit->SetWindowText(buffer);
 			}

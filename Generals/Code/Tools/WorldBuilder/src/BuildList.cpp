@@ -453,12 +453,12 @@ void BuildList::OnSelchangeBuildList()
 		pBuildInfo->setSelected(true);
 
 		m_angle = pBuildInfo->getAngle() * 180/PI;
-		sprintf(buff, "%0.2f", m_angle);
+		sprintf_s(buff, "%0.2f", m_angle);
 		edit = GetDlgItem(IDC_MAPOBJECT_Angle);
 		edit->SetWindowText(buff);
 
 		m_height = pBuildInfo->getLocation()->z;
-		sprintf(buff, "%0.2f", m_height);
+		sprintf_s(buff, "%0.2f", m_height);
 		edit = GetDlgItem(IDC_MAPOBJECT_ZOffset);
 		edit->SetWindowText(buff);
 
@@ -570,7 +570,7 @@ void BuildList::OnEditchangeRebuilds()
 	if (pCombo) {
 		pCombo->GetWindowText(buffer, sizeof(buffer));
 		Int nr;
-		if (1==sscanf(buffer, "%d", &nr)) {
+		if (1==sscanf_s(buffer, "%d", &nr)) {
 		}
 			SidesInfo *pSide = TheSidesList->getSideInfo(m_curSide); 
 			if (m_curBuildList < 0) return;
@@ -642,7 +642,7 @@ void BuildList::PopSliderChanged(const long sliderID, long theVal)
 	switch (sliderID) {
 		case IDC_HEIGHT_POPUP:
 			m_height = theVal;
-			sprintf(buff, "%0.2f", m_height);
+			sprintf_s(buff, "%0.2f", m_height);
 			edit = GetDlgItem(IDC_MAPOBJECT_ZOffset);
 			edit->SetWindowText(buff);
 			OnChangeZOffset();
@@ -650,7 +650,7 @@ void BuildList::PopSliderChanged(const long sliderID, long theVal)
 
 		case IDC_ANGLE_POPUP:
 			m_angle = theVal;
-			sprintf(buff, "%0.2f", m_angle);
+			sprintf_s(buff, "%0.2f", m_angle);
 			edit = GetDlgItem(IDC_MAPOBJECT_Angle);
 			edit->SetWindowText(buff);
 			break;
@@ -752,15 +752,15 @@ void BuildList::OnExport()
 
 		char curbuf[ _MAX_PATH ];
 
-		strcpy(curbuf, dirbuf);
+		strcpy_s(curbuf, dirbuf);
 		SidesInfo *pSide = TheSidesList->getSideInfo(m_curSide); 
 		Dict *d = TheSidesList->getSideInfo(m_curSide)->getDict();
 		AsciiString name = d->getAsciiString(TheKey_playerName);
-		strcat(curbuf, name.str());
-		strcat(curbuf, "_BuildList");
-		strcat(curbuf, ".ini");
+		strcat_s(curbuf, name.str());
+		strcat_s(curbuf, "_BuildList");
+		strcat_s(curbuf, ".ini");
 
-		theLogFile = fopen(curbuf, "w");
+		fopen_s(&theLogFile, curbuf, "w");
 		if (theLogFile == NULL)
 			throw;
 

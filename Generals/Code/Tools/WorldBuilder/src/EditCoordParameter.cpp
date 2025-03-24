@@ -86,7 +86,7 @@ void EditCoordParameter::OnOK()
 
 	pEditX->GetWindowText(txt);
 	Real theReal;
-	if (1==sscanf(txt, "%f", &theReal)) {
+	if (1==sscanf_s(txt, "%f", &theReal)) {
 		m_coord.x = theReal;
 	} else {
 		pEditX->SetFocus();
@@ -94,7 +94,7 @@ void EditCoordParameter::OnOK()
 		return;
 	}
 	pEditY->GetWindowText(txt);
-	if (1==sscanf(txt, "%f", &theReal)) {
+	if (1==sscanf_s(txt, "%f", &theReal)) {
 		m_coord.y = theReal;
 	} else {
 		pEditX->SetFocus();
@@ -102,7 +102,7 @@ void EditCoordParameter::OnOK()
 		return;
 	}
 	pEditZ->GetWindowText(txt);
-	if (1==sscanf(txt, "%f", &theReal)) {
+	if (1==sscanf_s(txt, "%f", &theReal)) {
 		m_coord.z = theReal;
 	} else {
 		pEditX->SetFocus();

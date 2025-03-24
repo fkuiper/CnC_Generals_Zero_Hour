@@ -356,7 +356,7 @@ AsciiString EditParameter::getWarningText(Parameter *pParm)
 		
 		
 		case Parameter::BOUNDARY:
-			if (TheTerrainRenderObject->getMap()->getAllBoundaries().size() <= pParm->getInt()) {
+			if (TheTerrainRenderObject->getMap()->getAllBoundaries().size() <= (size_t)pParm->getInt()) {
 				warningText.format("Border %s does not exist.", BORDER_COLORS[pParm->getInt() % BORDER_COLORS_SIZE]);
 			} 
 			break;
@@ -748,7 +748,7 @@ Bool EditParameter::loadSciences(CComboBox *pCombo, AsciiString match)
 	Bool retVal = false;
 
 	std::vector<AsciiString> v = TheScienceStore->friend_getScienceNames();
-	for (int i = 0; i < v.size(); ++i) 
+	for (int i = 0; i < (int)v.size(); ++i) 
 	{
 		if (pCombo) 
 		{
@@ -1104,7 +1104,7 @@ Bool EditParameter::loadAudioType(Parameter::ParameterType  comboType, CComboBox
 	std::vector<AudioEventInfo *> eventInfos;
 	TheAudio->findAllAudioEventsOfType(type, eventInfos);
 	
-	for (int i = 0; i < eventInfos.size(); ++i) {
+	for (int i = 0; i < (int)eventInfos.size(); ++i) {
 		if (eventInfos[i]) {
 			if (pCombo) {
 				pCombo->AddString(eventInfos[i]->m_audioName.str());
@@ -1213,12 +1213,12 @@ Bool EditParameter::loadCommandButtons(CComboBox *pCombo, AsciiString match)
 	string = buf;
 	while (fp->eof() == FALSE)
 	{
-		token = strtok(string, seps);
+		token = strtok_s(string, seps, NULL);
 		if( token != NULL )
 		{
 			if( strcmp( token, "CommandButton" ) == 0)
 			{
-				token = strtok(NULL, seps);
+				token = strtok_s(NULL, seps, NULL);
 				if( token != NULL )
 				{
 					if (pCombo) pCombo->AddString(token);
@@ -1258,7 +1258,7 @@ Bool EditParameter::loadFontNames(CComboBox *pCombo, AsciiString match)
 		string.concat( " - Size:" );
 		Int size = font->pointSize;
 		char buffer[33];
-    itoa( size, buffer, 10 );
+    _itoa_s( size, buffer, 10 );
 		string.concat( buffer );
 		if( font->bold )
 			string.concat( " [Bold]" );
@@ -1337,7 +1337,7 @@ void EditParameter::readFontFile( char *filename )
 		{
 			char buffer[ 1024 ];
 
-			sprintf( buffer, "Warning: The font '%s' Size: '%d' Bold: '%d', specified in the config file could not be loaded.  Does that font exist?",
+			sprintf_s( buffer, "Warning: The font '%s' Size: '%d' Bold: '%d', specified in the config file could not be loaded.  Does that font exist?",
 							 fontBuffer, size, bold );
 			//MessageBox( m_appHWnd, buffer, "Cannot Load Font", MB_OK );
 			
@@ -2131,7 +2131,7 @@ void EditParameter::OnOK()
 		case Parameter::INT:
 			pEdit->GetWindowText(txt);
 			Int theInt;
-			if (1==sscanf(txt, "%d", &theInt)) {
+			if (1==sscanf_s(txt, "%d", &theInt)) {
 				m_parameter->friend_setInt(theInt);
 			} else {
 				pEdit->SetFocus();
@@ -2143,7 +2143,7 @@ void EditParameter::OnOK()
 		case Parameter::COLOR:
 			DEBUG_CRASH(("should never get here for this data type"));
 			pEdit->GetWindowText(txt);
-			if (1==sscanf(txt, "%08lx", &theInt)) {
+			if (1==sscanf_s(txt, "%08lx", &theInt)) {
 				m_parameter->friend_setInt(theInt);
 			} else {
 				pEdit->SetFocus();
@@ -2155,7 +2155,7 @@ void EditParameter::OnOK()
 		case Parameter::REAL:
 			pEdit->GetWindowText(txt);
 			Real theReal;
-			if (1==sscanf(txt, "%f", &theReal)) {
+			if (1==sscanf_s(txt, "%f", &theReal)) {
 				m_parameter->friend_setReal(theReal);
 			} else {
 				pEdit->SetFocus();
@@ -2166,7 +2166,7 @@ void EditParameter::OnOK()
 
 		case Parameter::ANGLE:
 			pEdit->GetWindowText(txt);
-			if (1==sscanf(txt, "%f", &theReal)) {
+			if (1==sscanf_s(txt, "%f", &theReal)) {
 				m_parameter->friend_setReal(theReal*PI/180);
 			} else {
 				pEdit->SetFocus();
@@ -2296,13 +2296,13 @@ AsciiString EditParameter::loadLocalizedText(CComboBox *pCombo, AsciiString isSt
 	AsciiStringVec vec = TheGameText->getStringsWithLabelPrefix(theScriptPrefix);
 	if (pCombo) {
 		pCombo->Clear();
-		for (int i = 0; i < vec.size(); ++i) {
+		for (int i = 0; i < (int)vec.size(); ++i) {
 			pCombo->AddString(vec[i].str());
 		}
 	}
 	
 	if (isStringInTable != AsciiString::TheEmptyString) {
-		for (int i = 0; i < vec.size(); ++i) {
+		for (int i = 0; i < (int)vec.size(); ++i) {
 			if (isStringInTable.compare(vec[i].str()) == 0) {
 				return vec[i];
 			}

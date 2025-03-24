@@ -132,9 +132,9 @@ void SaveMap::populateMapListbox( Bool systemMaps )
 	char				fileBuf[_MAX_PATH];
 
 	if (systemMaps)
-		strcpy(dirBuf, ".\\Maps\\");
+		strcpy_s(dirBuf, ".\\Maps\\");
 	else
-		sprintf(dirBuf, "%sMaps\\", TheGlobalData->getPath_UserData().str());
+		sprintf_s(dirBuf, "%sMaps\\", TheGlobalData->getPath_UserData().str());
 	int len = strlen(dirBuf);
 
 	if (len > 0 && dirBuf[len - 1] != '\\') {
@@ -144,8 +144,8 @@ void SaveMap::populateMapListbox( Bool systemMaps )
 	CListBox *pList = (CListBox *)this->GetDlgItem(IDC_SAVE_LIST);
 	if (pList == NULL) return;
 	pList->ResetContent();
-	strcpy(findBuf, dirBuf);
-	strcat(findBuf, "*.*");
+	strcpy_s(findBuf, dirBuf);
+	strcat_s(findBuf, "*.*");
 
 	hFindFile = FindFirstFile(findBuf, &findData); 
 	if (hFindFile != INVALID_HANDLE_VALUE) {
@@ -155,11 +155,11 @@ void SaveMap::populateMapListbox( Bool systemMaps )
 			if ((findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0) {
 				continue;
 			}
-			strcpy(fileBuf, dirBuf);
-			strcat(fileBuf, findData.cFileName);
-			strcat(fileBuf, "\\");
-			strcat(fileBuf, findData.cFileName);
-			strcat(fileBuf, ".map");
+			strcpy_s(fileBuf, dirBuf);
+			strcat_s(fileBuf, findData.cFileName);
+			strcat_s(fileBuf, "\\");
+			strcat_s(fileBuf, findData.cFileName);
+			strcat_s(fileBuf, ".map");
 			try {
 				CFileStatus status;
 				if (CFile::GetStatus(fileBuf, status)) {
@@ -175,9 +175,9 @@ void SaveMap::populateMapListbox( Bool systemMaps )
  	}
 	CEdit *pEdit = (CEdit*)GetDlgItem(IDC_SAVE_MAP_EDIT);
 	if (pEdit != NULL) {
-		strcpy(fileBuf, m_pInfo->filename);
+		strcpy_s(fileBuf, m_pInfo->filename);
 		Int len = strlen(fileBuf);
-		if (len>4 && stricmp(".map", fileBuf+(len-4)) == 0) {
+		if (len>4 && _stricmp(".map", fileBuf+(len-4)) == 0) {
 			// strip of the .map
 			fileBuf[len-4] = 0;
 		}

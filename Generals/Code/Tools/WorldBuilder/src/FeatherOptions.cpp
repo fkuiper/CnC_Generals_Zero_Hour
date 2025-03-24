@@ -131,10 +131,10 @@ void FeatherOptions::OnChangeSizeEdit()
 			pEdit->GetWindowText(buffer, sizeof(buffer));
 			Int width;
 			m_updating = true;
-			if (1==sscanf(buffer, "%d", &width)) {
+			if (1==sscanf_s(buffer, "%d", &width)) {
 				m_currentFeather = width;
 				FeatherTool::setFeather(m_currentFeather);
-				sprintf(buffer, "%.1f FEET.", m_currentFeather*MAP_XY_FACTOR);
+				sprintf_s(buffer, "%.1f FEET.", m_currentFeather*MAP_XY_FACTOR);
 				pEdit = m_staticThis->GetDlgItem(IDC_WIDTH_LABEL);
 				if (pEdit) pEdit->SetWindowText(buffer);
 			}

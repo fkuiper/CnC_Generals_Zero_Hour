@@ -93,7 +93,7 @@ void ShadowOptions::OnChangeAlphaEdit()
 	char buffer[_MAX_PATH];
 	if (pEdit) {
 		pEdit->GetWindowText(buffer, sizeof(buffer));
-		if (1==sscanf(buffer, "%f", &clr)) {
+		if (1==sscanf_s(buffer, "%f", &clr)) {
 			m_intensity = clr;
 			setShadowColor();
 		}
@@ -107,7 +107,7 @@ void ShadowOptions::OnChangeBaEdit()
 	char buffer[_MAX_PATH];
 	if (pEdit) {
 		pEdit->GetWindowText(buffer, sizeof(buffer));
-		if (1==sscanf(buffer, "%f", &clr)) {
+		if (1==sscanf_s(buffer, "%f", &clr)) {
 			m_blue = clr;
 			setShadowColor();
 		}
@@ -121,7 +121,7 @@ void ShadowOptions::OnChangeGaEdit()
 	char buffer[_MAX_PATH];
 	if (pEdit) {
 		pEdit->GetWindowText(buffer, sizeof(buffer));
-		if (1==sscanf(buffer, "%f", &clr)) {
+		if (1==sscanf_s(buffer, "%f", &clr)) {
 			m_green = clr;
 			setShadowColor();
 		}
@@ -135,7 +135,7 @@ void ShadowOptions::OnChangeRaEdit()
 	char buffer[_MAX_PATH];
 	if (pEdit) {
 		pEdit->GetWindowText(buffer, sizeof(buffer));
-		if (1==sscanf(buffer, "%f", &clr)) {
+		if (1==sscanf_s(buffer, "%f", &clr)) {
 			m_red = clr;
 			setShadowColor();
 		}

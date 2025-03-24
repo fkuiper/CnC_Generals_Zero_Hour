@@ -107,7 +107,7 @@ AsciiString GroveOptions::getTypeName(int type)
 	}
 
 	int curSel = pComboBox->GetCurSel();
-	if (curSel < 0 || curSel > mVecDisplayNames.size()) {
+	if (curSel < 0 || curSel > (int)mVecDisplayNames.size()) {
 		return "";
 	}
 	CString cstr;
@@ -266,35 +266,35 @@ void GroveOptions::_setDefaultRatios(void)
 	CWnd* pWnd = GetDlgItem(IDC_Grove_Per1);
 	if (pWnd) {
 		defaultRatio = AfxGetApp()->GetProfileInt("GroveOptions", "DefaultRatio1", 0);
-		sprintf(buff, "%d", defaultRatio);
+		sprintf_s(buff, "%d", defaultRatio);
 		pWnd->SetWindowText(buff);
 	}
 
 	pWnd = GetDlgItem(IDC_Grove_Per2);
 	if (pWnd) {
 		defaultRatio = AfxGetApp()->GetProfileInt("GroveOptions", "DefaultRatio2", 0);
-		sprintf(buff, "%d", defaultRatio);
+		sprintf_s(buff, "%d", defaultRatio);
 		pWnd->SetWindowText(buff);
 	}
 
 	pWnd = GetDlgItem(IDC_Grove_Per3);
 	if (pWnd) {
 		defaultRatio = AfxGetApp()->GetProfileInt("GroveOptions", "DefaultRatio3", 0);
-		sprintf(buff, "%d", defaultRatio);
+		sprintf_s(buff, "%d", defaultRatio);
 		pWnd->SetWindowText(buff);
 	}
 
 	pWnd = GetDlgItem(IDC_Grove_Per4);
 	if (pWnd) {
 		defaultRatio = AfxGetApp()->GetProfileInt("GroveOptions", "DefaultRatio4", 0);
-		sprintf(buff, "%d", defaultRatio);
+		sprintf_s(buff, "%d", defaultRatio);
 		pWnd->SetWindowText(buff);
 	}
 
 	pWnd = GetDlgItem(IDC_Grove_Per5);
 	if (pWnd) {
 		defaultRatio = AfxGetApp()->GetProfileInt("GroveOptions", "DefaultRatio5", 0);
-		sprintf(buff, "%d", defaultRatio);
+		sprintf_s(buff, "%d", defaultRatio);
 		pWnd->SetWindowText(buff);
 	}
 }
@@ -308,7 +308,7 @@ void GroveOptions::_setDefaultNumTrees(void)
 
 	int defaultNumTrees = AfxGetApp()->GetProfileInt("GroveOptions", "NumberofTrees", 10);
 	static char buff[ARBITRARY_BUFF_SIZE];
-	sprintf(buff, "%d", defaultNumTrees);
+	sprintf_s(buff, "%d", defaultNumTrees);
 
 	pWnd->SetWindowText(buff);
 }
@@ -379,7 +379,7 @@ void GroveOptions::_updateTreeWeights(void)
 
 	pWnd = GetDlgItem(IDC_Grove_PerTotal);
 	if (pWnd) {
-		sprintf(buff, "%d", val);
+		sprintf_s(buff, "%d", val);
 		pWnd->SetWindowText(buff);
 	}
 }

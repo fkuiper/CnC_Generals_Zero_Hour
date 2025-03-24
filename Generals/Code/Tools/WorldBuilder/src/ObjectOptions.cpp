@@ -54,7 +54,7 @@ AsciiString ObjectOptions::m_curOwnerName;
 ObjectOptions::ObjectOptions(CWnd* pParent /*=NULL*/)
 {
 	m_objectsList = NULL;
-	strcpy(m_currentObjectName, "No Selection");
+	strcpy_s(m_currentObjectName, "No Selection");
 	m_curOwnerName.clear();
 	//{{AFX_DATA_INIT(ObjectOptions)
 		// NOTE: the ClassWizard will add member initialization here
@@ -284,15 +284,15 @@ BOOL ObjectOptions::OnInitDialog()
 		char				fileBuf[_MAX_PATH];
 		Int					i;
 
-		strcpy(dirBuf, TEST_W3D_DIR_PATH);
+		strcpy_s(dirBuf, TEST_W3D_DIR_PATH);
 		int len = strlen(dirBuf);
 
 		if (len > 0 && dirBuf[len - 1] != '\\' && dirBuf[len-1] != '/') {
 			dirBuf[len++] = '\\';
 			dirBuf[len] = 0;
 		}
-		strcpy(findBuf, dirBuf);
-		strcat(findBuf, "*.*");
+		strcpy_s(findBuf, dirBuf);
+		strcat_s(findBuf, "*.*");
 
 		FilenameList filenameList;
 		TheFileSystem->getFileListInDirectory(AsciiString(dirBuf), AsciiString("*.w3d"), filenameList, FALSE);
@@ -311,9 +311,9 @@ BOOL ObjectOptions::OnInitDialog()
 					filename.nextToken(&token, "\\/");
 				}
 
-				strcpy(fileBuf, TEST_STRING);
-				strcat(fileBuf, "/");
-				strcat(fileBuf, token.str());
+				strcpy_s(fileBuf, TEST_STRING);
+				strcat_s(fileBuf, "/");
+				strcat_s(fileBuf, token.str());
 				for (i=strlen(fileBuf)-1; i>0; i--) {
 					if (fileBuf[i] == '.') {
 						// strip off .w3d file extension.
@@ -431,7 +431,7 @@ HTREEITEM ObjectOptions::_FindOrDont(const char* pLabel, HTREEITEM startPoint)
 			item.cchTextMax = sizeof(buffer)-2;				
 			m_objectTreeView.GetItem(&item);
 
-			char* strToTest = strrchr(pLabel, '/');
+			const char* strToTest = strrchr(pLabel, '/');
 //		if (strstr((strToTest ? strToTest : pLabel), buffer)) 
 			if (strcmp((strToTest ? strToTest : pLabel), buffer) == 0) 
 			{
@@ -482,11 +482,12 @@ void ObjectOptions::addObject( MapObject *mapObject, const char *pPath,
 		// first sort by side, either create or find the tree item with matching side name
 		AsciiString side = thingTemplate->getDefaultOwningSide();
 		DEBUG_ASSERTCRASH( !side.isEmpty(), ("NULL default side in template\n") );
-		strcpy( buffer, side.str() );
+		strcpy_s( buffer, side.str() );
 		parent = findOrAdd( parent, buffer );
 
 		// next tier uses the editor sorting that design can specify in the INI
-		for( EditorSortingType i = ES_FIRST; 
+		EditorSortingType i = ES_FIRST;
+		for( ; 
 				 i < ES_NUM_SORTING_TYPES;
 				 i = (EditorSortingType)(i + 1) )
 		{
@@ -574,7 +575,7 @@ Bool ObjectOptions::setObjectTreeViewSelection(HTREEITEM parent, Int selection)
 		}
 		if (setObjectTreeViewSelection(child, selection)) 
 		{
-			strcpy(m_currentObjectName, buffer);
+			strcpy_s(m_currentObjectName, buffer);
 			updateLabel();
 			return(true);
 		}
@@ -613,9 +614,9 @@ BOOL ObjectOptions::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 			m_objectTreeView.GetItem(&item);
 			if (item.lParam >= 0) {
 				m_currentObjectIndex = item.lParam;
-				strcpy(m_currentObjectName, buffer);
+				strcpy_s(m_currentObjectName, buffer);
 			}	else if (m_objectTreeView.ItemHasChildren(item.hItem)) {
-				strcpy(m_currentObjectName, "No Selection");
+				strcpy_s(m_currentObjectName, "No Selection");
 				m_currentObjectIndex = -1;
 			}
 			updateLabel();
@@ -830,7 +831,7 @@ void ObjectOptions::selectObject(const MapObject* pObj)
 
 		if (m_staticThis->m_objectTreeView.SelectItem(objToSel)) {
 			m_staticThis->m_currentObjectIndex = item.lParam;
-			strcpy(m_staticThis->m_currentObjectName, buffer);
+			strcpy_s(m_staticThis->m_currentObjectName, buffer);
 		}
 	}
 }

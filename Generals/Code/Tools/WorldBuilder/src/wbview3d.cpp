@@ -543,7 +543,7 @@ void WbView3d::ReAcquireResources(void)
 		logFont.lfClipPrecision = CLIP_DEFAULT_PRECIS;
 		logFont.lfQuality = DEFAULT_QUALITY;
 		logFont.lfPitchAndFamily = DEFAULT_PITCH;
-		strcpy(logFont.lfFaceName, "Arial");
+		strcpy_s(logFont.lfFaceName, "Arial");
 
 		HFONT hFont = CreateFontIndirect(&logFont);
 		if (hFont) {
@@ -1147,7 +1147,7 @@ void WbView3d::invalBuildListItemInView(BuildListInfo *pBuildToInval)
 						Shadow::ShadowTypeInfo shadowInfo;
 						shadowInfo.allowUpdates=FALSE;	//shadow image will never update
 						shadowInfo.allowWorldAlign=TRUE;	//shadow image will wrap around world objects
-						strcpy(shadowInfo.m_ShadowName,tTemplate->getShadowTextureName().str());
+						strcpy_s(shadowInfo.m_ShadowName,tTemplate->getShadowTextureName().str());
 						DEBUG_ASSERTCRASH(shadowInfo.m_ShadowName[0] != '\0', ("this should be validated in ThingTemplate now"));
 						shadowInfo.m_type=(ShadowType)tTemplate->getShadowType();
 						shadowInfo.m_sizeX=tTemplate->getShadowSizeX();
@@ -1262,7 +1262,7 @@ AsciiString WbView3d::getModelNameAndScale(MapObject *pMapObj, Real *scale, Body
 	if (strncmp(TEST_STRING, pMapObj->getName().str(), strlen(TEST_STRING)) == 0) 
 	{
 		/* Handle test art models here */
-		strcpy(buffer, pMapObj->getName().str());
+		strcpy_s(buffer, pMapObj->getName().str());
 
 		for (i=0; buffer[i]; i++) {
 			if (buffer[i] == '/') {
@@ -1412,7 +1412,7 @@ void WbView3d::invalObjectInView(MapObject *pMapObjIn)
 					const ThingTemplate *tTemplate = pMapObj->getThingTemplate();
 					if (tTemplate && tTemplate->getShadowType() != SHADOW_NONE && !(pMapObj->getFlags() & FLAG_DONT_RENDER))
 					{	//add correct type of shadow
-						strcpy(shadowInfo.m_ShadowName,tTemplate->getShadowTextureName().str());
+						strcpy_s(shadowInfo.m_ShadowName,tTemplate->getShadowTextureName().str());
 						DEBUG_ASSERTCRASH(shadowInfo.m_ShadowName[0] != '\0', ("this should be validated in ThingTemplate now"));
 						shadowInfo.m_type=(ShadowType)tTemplate->getShadowType();
 						shadowInfo.m_sizeX=tTemplate->getShadowSizeX();
@@ -2194,7 +2194,7 @@ void WbView3d::initWW3D()
 			logFont.lfClipPrecision = CLIP_DEFAULT_PRECIS;
 			logFont.lfQuality = DEFAULT_QUALITY;
 			logFont.lfPitchAndFamily = DEFAULT_PITCH;
-			strcpy(logFont.lfFaceName, "Arial");
+			strcpy_s(logFont.lfFaceName, "Arial");
 
 			HFONT hFont = CreateFontIndirect(&logFont);
 			if (hFont) {
@@ -2430,7 +2430,7 @@ void WbView3d::drawLabels(HDC hdc)
 
 			if (m_lightFeedbackMesh[lIndex] == NULL)
 			{	char nameBuf[64];
-				sprintf(nameBuf,"WB_LIGHT%d",lIndex+1);
+				sprintf_s(nameBuf,"WB_LIGHT%d",lIndex+1);
 				m_lightFeedbackMesh[lIndex]=WW3DAssetManager::Get_Instance()->Create_Render_Obj(nameBuf);
 			}
 			if (m_lightFeedbackMesh[lIndex]==NULL) {
