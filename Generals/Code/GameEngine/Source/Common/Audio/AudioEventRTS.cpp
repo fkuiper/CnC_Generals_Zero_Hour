@@ -671,7 +671,7 @@ Bool AudioEventRTS::isPositionalAudio( void ) const
 {
 	if( m_eventInfo ) 
 	{
-		if( !BitTest( m_eventInfo->m_type, ST_WORLD ) ) 
+		if( !CNC_BitTest( m_eventInfo->m_type, ST_WORLD ) )
 		{
 			return FALSE;
 		}

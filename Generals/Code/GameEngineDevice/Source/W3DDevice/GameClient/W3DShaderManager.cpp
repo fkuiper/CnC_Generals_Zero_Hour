@@ -72,7 +72,9 @@
 #include "d3dx8tex.h"
 #include "dx8caps.h"
 #include "common/gamelod.h"
+#ifdef INCLUDE_BENCHMARK_CODE
 #include "Benchmark.h"
+#endif
 
 #ifdef _INTERNAL
 // for occasional debugging...
@@ -2438,7 +2440,8 @@ void W3DShaderManager::shutdown(void)
 	m_currentShader = ST_INVALID;
 	m_currentFilter = FT_NULL_FILTER;
 	//release any assets associated with a shader (vertex/pixel shaders, textures, etc.)
-	for (Int i=0; i<W3DShaderManager::ST_MAX; i++) {
+	Int i = 0;
+	for (; i<W3DShaderManager::ST_MAX; i++) {
 		if (W3DShaders[i]) {
 			W3DShaders[i]->shutdown();
 		}
@@ -2843,7 +2846,9 @@ Bool W3DShaderManager::testMinimumRequirements(ChipsetType *videoChipType, CpuTy
 
 	if (intBenchIndex && floatBenchIndex && memBenchIndex)
 	{
+#if 0
 		RunBenchmark(0, NULL, floatBenchIndex, intBenchIndex, memBenchIndex);
+#endif
 	}
 
 	return TRUE;

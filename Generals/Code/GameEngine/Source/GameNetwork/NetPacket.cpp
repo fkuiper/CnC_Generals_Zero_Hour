@@ -156,10 +156,11 @@ NetPacketList NetPacket::ConstructBigCommandPacketList(NetCommandRef *ref) {
 	// be wrapped.
 	NetCommandMsg *msg = ref->getCommand();
 
-	if (!DoesCommandRequireACommandID(msg->getNetCommandType())) {
-		DEBUG_CRASH(("Trying to wrap a command that doesn't have a unique command ID"));
-		return NULL;
-	}
+	// TODO: Removed old code!
+	//if (!DoesCommandRequireACommandID(msg->getNetCommandType())) {
+	//	DEBUG_CRASH(("Trying to wrap a command that doesn't have a unique command ID"));
+	//	return NULL;
+	//}
 
 	UnsignedInt bufferSize = GetBufferSizeNeededForCommand(msg);  // need to implement.  I have a drinking problem.
 	UnsignedByte *bigPacketData = NULL;
@@ -5219,7 +5220,8 @@ NetCommandMsg * NetPacket::readGameMessage(UnsignedByte *data, Int &i)
 	// Get the types and the number of arguments of those types.
 	Int totalArgCount = 0;
 	GameMessageParser *parser = newInstance(GameMessageParser)();
-	for (Int j = 0; j < numArgTypes; ++j) {
+	Int j = 0;
+	for (; j < numArgTypes; ++j) {
 		UnsignedByte type = (UnsignedByte)ARGUMENTDATATYPE_UNKNOWN;
 		memcpy(&type, data + i, sizeof(type));
 		i += sizeof(type);
@@ -5569,7 +5571,7 @@ NetCommandMsg * NetPacket::readDisconnectChatMessage(UnsignedByte *data, Int &i)
 	text[length] = 0;
 
 	UnicodeString unitext;
-	unitext.set(text);
+	unitext.set((const WideChar*)text);
 
 	//DEBUG_LOG_LEVEL(DEBUG_LEVEL_NET, ("NetPacket::readDisconnectChatMessage - read message, message is %ls\n", unitext.str()));
 
@@ -5596,8 +5598,8 @@ NetCommandMsg * NetPacket::readChatMessage(UnsignedByte *data, Int &i) {
 
 
 	UnicodeString unitext;
-	unitext.set(text);
-
+	unitext.set((const WideChar*)text);
+	 
 	//DEBUG_LOG_LEVEL(DEBUG_LEVEL_NET, ("NetPacket::readChatMessage - read message, message is %ls\n", unitext.str()));
 
 	msg->setText(unitext);

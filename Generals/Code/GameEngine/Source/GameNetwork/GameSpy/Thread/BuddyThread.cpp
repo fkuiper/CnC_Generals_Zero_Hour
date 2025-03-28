@@ -270,7 +270,9 @@ void BuddyThreadClass::Thread_Function()
 	_set_se_translator( DumpExceptionInfo ); // Hook that allows stack trace.
 	GPConnection gpCon;
 	GPConnection *con = &gpCon;
+	#ifdef INCLUDE_GAMESPY_CODE
 	gpInitialize( con, 0 );
+	#endif 
 	m_isConnected = m_isConnecting = false;
 
 	gpSetCallback( con, GP_ERROR,								callbackWrapper,	(void *)CALLBACK_ERROR );
@@ -308,7 +310,9 @@ void BuddyThreadClass::Thread_Function()
 				break;
 			case BuddyRequest::BUDDYREQUEST_DELETEACCT:
 				m_isdeleting =  true;
+				#ifdef INCLUDE_GAMESPY_CODE
 				gpDeleteProfile( con );
+				#endif			
 				break;
 			case BuddyRequest::BUDDYREQUEST_LOGOUT:
 				m_isConnecting = m_isConnected = false;
@@ -328,9 +332,11 @@ void BuddyThreadClass::Thread_Function()
 					m_email = incomingRequest.arg.login.email;
 					m_pass = incomingRequest.arg.login.password;
 					m_isNewAccount = TRUE;
+					#ifdef INCLUDE_GAMESPY_CODE
 					m_isConnected = (gpConnectNewUser( con, incomingRequest.arg.login.nick, incomingRequest.arg.login.email,
 						incomingRequest.arg.login.password, (incomingRequest.arg.login.hasFirewall)?GP_FIREWALL:GP_NO_FIREWALL,
 						GP_BLOCKING, callbackWrapper, (void *)CALLBACK_CONNECT ) == GP_NO_ERROR);
+					#endif // INCLUDE_GAMESPY_CODE
 					if (m_isNewAccount) // if we didn't re-login
 					{
 						gpSetInfoMask( con, GP_MASK_NONE ); // don't share info

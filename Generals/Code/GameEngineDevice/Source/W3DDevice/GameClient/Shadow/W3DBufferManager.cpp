@@ -61,8 +61,9 @@ W3DBufferManager::W3DBufferManager(void)
 	m_numEmptyVertexBuffersAllocated=0;
 	m_numEmptyIndexSlotsAllocated=0;
 	m_numEmptyIndexBuffersAllocated=0;
+	Int i = 0;
 
-	for (Int i=0; i<MAX_FVF; i++)
+	for (; i<MAX_FVF; i++)
 		m_W3DVertexBuffers[i]=NULL;
 	for (i=0; i<MAX_FVF; i++)
 		for (Int j=0; j<MAX_VB_SIZES; j++)

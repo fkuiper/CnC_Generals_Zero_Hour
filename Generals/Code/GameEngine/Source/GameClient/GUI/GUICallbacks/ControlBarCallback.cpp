@@ -105,7 +105,7 @@ WindowMsgHandledType LeftHUDInput( GameWindow *window, UnsignedInt msg,
 			const CommandButton *command = TheInGameUI->getGUICommand();
 			if( command 
 					&& (command->getCommandType() == GUI_COMMAND_SPECIAL_POWER || command->getCommandType() == GUI_COMMAND_SPECIAL_POWER_FROM_COMMAND_CENTER)
-					&& BitTCNC_BitTestest( command->getOptions(), NEED_TARGET_POS ) )
+					&& CNC_BitTest( command->getOptions(), NEED_TARGET_POS ) )
 				targeting = TRUE;
 
 			if( targeting == FALSE )

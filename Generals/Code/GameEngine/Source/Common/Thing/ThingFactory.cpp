@@ -110,8 +110,8 @@ ThingFactory::ThingFactory()
 {
 	m_firstTemplate = NULL;
 	m_nextTemplateID = 1;	// not zero!
-
-	m_templateHashMap.resize( TEMPLATE_HASH_SIZE );
+	// TODO: Removed since this is no longer possible when using unordered_map instead of hash_map
+	//m_templateHashMap.resize( TEMPLATE_HASH_SIZE );
 }  // end ThingFactory
 
 //-------------------------------------------------------------------------------------------------

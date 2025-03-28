@@ -431,7 +431,8 @@ void GameClient::reset( void )
 {
 	Drawable *draw, *nextDraw;
 	m_drawableHash.clear();
-	m_drawableHash.resize(DRAWABLE_HASH_SIZE);
+	// TODO: Removed since this is no longer possible when using unordered_map instead of hash_map
+	//m_drawableHash.resize(DRAWABLE_HASH_SIZE); 
 	
 	// need to reset the in game UI to clear drawables before they are destroyed
 	TheInGameUI->reset();
@@ -1072,7 +1073,8 @@ void GameClient::preloadAssets( TimeOfDay timeOfDay )
 
 	GlobalMemoryStatus(&before);
 	extern std::vector<AsciiString>	debrisModelNamesGlobalHack;
-	for (Int i=0; i<debrisModelNamesGlobalHack.size(); ++i)
+	Int i = 0;
+	for (; i<debrisModelNamesGlobalHack.size(); ++i)
 	{
 		TheDisplay->preloadModelAssets(debrisModelNamesGlobalHack[i]);
 	}

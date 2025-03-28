@@ -300,7 +300,7 @@ UpdateSleepTime ToppleUpdate::update()
 		// Hit so either bounce or stop if too little remaining velocity.
 		m_angularVelocity *= -d->m_bounceVelocityPercent;
 
-		if( BitTest( m_options, TOPPLE_OPTIONS_NO_BOUNCE ) == TRUE || 
+		if( CNC_BitTest( m_options, TOPPLE_OPTIONS_NO_BOUNCE ) == TRUE || 
 				fabs(m_angularVelocity) < VELOCITY_BOUNCE_LIMIT )
 		{
 			// too slow, just stop

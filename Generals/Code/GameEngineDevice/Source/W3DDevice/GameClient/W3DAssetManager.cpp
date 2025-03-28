@@ -408,9 +408,10 @@ static void remapTexture16Bit(Int dx, Int dy, Int pitch, SurfaceClass::SurfaceDe
 {
 	UnsignedShort pal[TEAM_COLOR_PALETTE_SIZE];
 	Vector3 rgb,v_color((float)((color>>16)&0xff)/255.0f/255.0f,(float)((color>>8)&0xff)/255.0f/255.0f,(float)(color&0xff)/255.0f/255.0f);
+	Int y = 0;
 
 	//Generate a new color gradient palette based on reference color
-	for (Int y=0; y<TEAM_COLOR_PALETTE_SIZE; y++)
+	for (; y<TEAM_COLOR_PALETTE_SIZE; y++)
 	{	
 		rgb.X=(Real)houseColorScale[y]*v_color.X;
 		rgb.Y=(Real)houseColorScale[y]*v_color.Y;
@@ -513,7 +514,8 @@ static void remapTexture32Bit(Int dx, Int dy, Int pitch, SurfaceClass::SurfaceDe
 	Vector3 rgb,v_color((float)((color>>16)&0xff)/255.0f/255.0f,(float)((color>>8)&0xff)/255.0f/255.0f,(float)(color&0xff)/255.0f/255.0f);
 
 	//Generate a new color gradient palette based on reference color
-	for (Int y=0; y<TEAM_COLOR_PALETTE_SIZE; y++)
+	Int y = 0;
+	for (; y<TEAM_COLOR_PALETTE_SIZE; y++)
 	{	
 		rgb.X=(Real)houseColorScale[y]*v_color.X;
 		rgb.Y=(Real)houseColorScale[y]*v_color.Y;
@@ -766,7 +768,7 @@ RenderObjClass * W3DAssetManager::Create_Render_Obj(
 	{	
 		// If we didn't find one, try to load on demand
 		char filename [MAX_PATH];
-		char *mesh_name = ::strchr (name, '.');
+		char *mesh_name = (char *)::strchr (name, '.');
 		if (mesh_name != NULL) 
 		{
 			::lstrcpyn(filename, name, ((int)mesh_name) - ((int)name) + 1);

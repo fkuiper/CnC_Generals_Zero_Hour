@@ -1171,7 +1171,7 @@ void PeerThreadClass::Thread_Function()
 	//callbacks.readyChanged = readyChangedCallback;
 	callbacks.roomMessage = roomMessageCallback;
 	callbacks.playerMessage = playerMessageCallback;
-	callbacks.gameStarted = gameStartedCallback;
+	callbacks.gameStarted = (peerGameStartedCallback)gameStartedCallback;
 	callbacks.playerJoined = playerJoinedCallback;
 	callbacks.playerLeft = playerLeftCallback;
 	callbacks.playerChangedNick = playerChangedNickCallback;
@@ -1325,7 +1325,8 @@ void PeerThreadClass::Thread_Function()
 		}
 		IPlist = IPlist->getNext();
 	}
-	chatSetLocalIP(preferredIP);
+	// TODO: GameSpy. Removed should check!
+	//chatSetLocalIP(preferredIP); 
 
 	UnsignedInt preferredQRPort = 0;
 	AsciiString selectedQRPort = pref["GameSpyQRPort"];
@@ -1351,7 +1352,7 @@ void PeerThreadClass::Thread_Function()
 				m_profileID = incomingRequest.login.profileID;
 				m_password = incomingRequest.password;
 				m_email = incomingRequest.email;
-				peerConnect( peer, incomingRequest.nick.c_str(), incomingRequest.login.profileID, nickErrorCallbackWrapper, connectCallbackWrapper, this, PEERTrue );
+				peerConnect( peer, incomingRequest.nick.c_str(), incomingRequest.login.profileID, (peerNickErrorCallback)nickErrorCallbackWrapper, (peerConnectCallback)connectCallbackWrapper, this, PEERTrue );
 #ifdef SERVER_DEBUGGING
 				DEBUG_LOG(("After peerConnect()\n"));
 				CheckServers(peer);
@@ -1819,8 +1820,8 @@ void PeerThreadClass::handleQMMatch(PEER peer, Int mapIndex, Int seed,
 	{
 		m_qmStatus = QM_MATCHED;
 		peerLeaveRoom(peer, GroupRoom, "");
-
-		for (Int i=0; i<MAX_SLOTS; ++i)
+		Int i = 0;
+		for (; i<MAX_SLOTS; ++i)
 		{
 			if (playerName[i] && stricmp(playerName[i], m_loginName.c_str()))
 			{
@@ -2255,7 +2256,8 @@ void PeerThreadClass::connectCallback( PEER peer, PEERBool success )
 	resp.player.profileID = m_profileID;
 	resp.nick = m_loginName;
 	GetLocalChatConnectionAddress("peerchat.gamespy.com", 6667, localIP);
-	chatSetLocalIP(localIP);
+	// TODO: GameSpy. Removed should check!
+	//chatSetLocalIP(localIP);
 	resp.player.internalIP = ntohl(localIP);
 	resp.player.externalIP = ntohl(peerGetLocalIP(peer));
 	TheGameSpyPeerMessageQueue->addResponse(resp);

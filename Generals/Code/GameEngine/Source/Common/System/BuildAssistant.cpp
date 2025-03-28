@@ -961,7 +961,7 @@ LegalBuildCode BuildAssistant::isLocationLegalToBuild( const Coord3D *worldPos,
 	}  // end if
 
 	// check basic terrain restrctions
-	if( BitTCNC_BitTestest( options, TERRAIN_RESTRICTIONS ) )
+	if( CNC_BitTest( options, TERRAIN_RESTRICTIONS ) )
 	{
 
 		//

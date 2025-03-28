@@ -96,7 +96,8 @@ RTS3DScene::RTS3DScene()
 	setName("RTS3DScene");
 	m_drawTerrainOnly = false;
 	m_numGlobalLights=0;
-	for (Int i=0; i<LightEnvironmentClass::MAX_LIGHTS; i++)
+	Int i = 0;
+	for (; i<LightEnvironmentClass::MAX_LIGHTS; i++)
 	{	m_globalLight[i]=NULL;
 		m_infantryLight[i]=NEW_REF( LightClass, (LightClass::DIRECTIONAL) );
 	}
@@ -183,7 +184,8 @@ RTS3DScene::RTS3DScene()
 //=============================================================================
 RTS3DScene::~RTS3DScene()
 {
-	for (Int i=0; i<LightEnvironmentClass::MAX_LIGHTS; i++)
+	Int i = 0;
+	for (; i<LightEnvironmentClass::MAX_LIGHTS; i++)
 	{
 		REF_PTR_RELEASE(m_globalLight[i]);
 		REF_PTR_RELEASE(m_infantryLight[i]);
@@ -1300,11 +1302,13 @@ void RTS3DScene::flushOccludedObjectsIntoStencil(RenderInfoClass & rinfo)
 	TheW3DShadowManager->setStencilShadowMask(0);
 
 	Int localPlayerIndex = ThePlayerList ? ThePlayerList->getLocalPlayer()->getPlayerIndex() : 0;
+	Int i = 0;
 
 	if (m_numPotentialOccludees && m_numPotentialOccluders)
 	{
 		//bucket sort all possibly occluded objects by player index/color.
-		for (Int i=0; i<m_numPotentialOccludees; i++)
+		
+		for (; i<m_numPotentialOccludees; i++)
 		{
 			robj=m_potentialOccludees[i];
 
@@ -1473,7 +1477,7 @@ void RTS3DScene::flushOccludedObjects(RenderInfoClass & rinfo)
 	Drawable *draw;
 
 	TheW3DShadowManager->setStencilShadowMask(0);
-
+	Int i = 0;
 	if (m_occludedObjectsCount)
 	{
 		Int localPlayerIndex = ThePlayerList ? ThePlayerList->getLocalPlayer()->getPlayerIndex() : 0;
@@ -1495,7 +1499,7 @@ void RTS3DScene::flushOccludedObjects(RenderInfoClass & rinfo)
 		//First draw all the solid colored models
 		///@todo: Optimize this so that the extra passes don't actually install the material since it's all the same.
 		rinfo.Push_Override_Flags(RenderInfoClass::RINFO_OVERRIDE_ADDITIONAL_PASSES_ONLY);	//disable textures
-		for (Int i=0; i<m_occludedObjectsCount; i++)
+		for (; i<m_occludedObjectsCount; i++)
 		{
 			robj=m_potentialOccludees[i];
 

@@ -3068,7 +3068,7 @@ void ControlBar::triggerRadarAttackGlow( void )
 		return;
 	m_radarAttackGlowOn = TRUE;
 	m_remainingRadarAttackGlowFrames = RADAR_ATTACK_GLOW_FRAMES;
-	if(BitTCNC_BitTestest(m_radarAttackGlowWindow->winGetStatus(),WIN_STATUS_ENABLED) == TRUE)
+	if(CNC_BitTest(m_radarAttackGlowWindow->winGetStatus(),WIN_STATUS_ENABLED) == TRUE)
 		m_radarAttackGlowWindow->winEnable(FALSE);
 }
 
@@ -3093,8 +3093,8 @@ void ControlBar::updateRadarAttackGlow ( void )
 }
 void ControlBar::initSpecialPowershortcutBar( Player *player)
 {
-
-	for( Int i = 0; i < MAX_SPECIAL_POWER_SHORTCUTS; ++i )
+	Int i = 0;
+	for( ; i < MAX_SPECIAL_POWER_SHORTCUTS; ++i )
 	{
 		m_specialPowerShortcutButtonParents[i] = NULL;
 		m_specialPowerShortcutButtons[i] = NULL;
