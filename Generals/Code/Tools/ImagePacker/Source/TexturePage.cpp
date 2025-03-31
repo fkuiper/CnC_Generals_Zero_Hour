@@ -103,7 +103,7 @@ void TexturePage::extendToRowIfOpen( char *src,
 	}  // end if
 	else if( srcY >= imageHeight / 2 &&
 					 (srcY != imageHeight - 1 || 
-						BitTest( fitBits, ImageInfo::FIT_YBORDER_BOTTOM )) )
+						CNC_BitTest( fitBits, ImageInfo::FIT_YBORDER_BOTTOM )) )
 	{
 
 		// try to extend pixel "down" if that pixel is "open"
@@ -319,7 +319,7 @@ void TexturePage::extendImageEdges( Byte *destBuffer,
 			// extended into when we detect an edge change moving across x
 			//
 			if( currPixel == TRUE && x == imageWidth - 1 &&
-					BitTest( image->m_fitBits, ImageInfo::FIT_XBORDER_RIGHT ) )
+				CNC_BitTest( image->m_fitBits, ImageInfo::FIT_XBORDER_RIGHT ) )
 			{
 
 				//
@@ -430,8 +430,8 @@ void TexturePage::extendImageEdges( Byte *destBuffer,
 
 				// top left corner
 				if( x == 0 && y == 0 && 
-						BitTest( image->m_fitBits, ImageInfo::FIT_XBORDER_LEFT ) &&
-						BitTest( image->m_fitBits, ImageInfo::FIT_YBORDER_TOP ) )
+					CNC_BitTest( image->m_fitBits, ImageInfo::FIT_XBORDER_LEFT ) &&
+					CNC_BitTest( image->m_fitBits, ImageInfo::FIT_YBORDER_TOP ) )
 					dst = (ptr + (destWidth * destBPP)) - destBPP;
 
 				// top right corner
